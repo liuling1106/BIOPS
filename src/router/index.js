@@ -147,8 +147,8 @@ export const constantRoutes = [
   {
     path: '/settings',
     component: Layout,
-    redirect: '/config',
-    name: 'Config',
+    redirect: '/settings',
+    name: 'Settings',
     children: [
       {
         path: '/settings',

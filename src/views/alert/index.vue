@@ -1,7 +1,7 @@
 <template>
   <div class="alert-container">
     <div class="alert-title">{{ $t('i18nView.myAlert') }}</div>
-    <div class="alert-count">12</div>
+    <div class="alert-count">{{ MyAlert }}</div>
   </div>
 
 </template>
@@ -14,7 +14,7 @@ export default {
   name: 'AlertName',
   data() {
     return {
-      MyAlert: 12
+      MyAlert: 50
     }
   },
   created() {

@@ -6,7 +6,7 @@ const count = 50
 for (let i = 0; i < count; i++) {
   List.push(Mock.mock({
     alertId: '@guid',
-    level: '@integer(1, 5)',
+    level: '@integer(1, 4)',
     duration: '@DATETIME("HH:mm:ss")',
     'status|1': ['New', 'Active', 'Resolved'],
     'assignedTo|1': ['New', 'Nicholas Cook'],
@@ -33,6 +33,23 @@ module.exports = [
         data: {
           total: mockList.length,
           items: pageList
+        }
+      }
+    }
+  },
+  {
+    url: '/vue-element-admin/alerts/detail',
+    type: 'get',
+    response: config => {
+      console.log(config)
+      const { id } = config.query
+      for (const alert of List) {
+        debugger
+        if (alert.alertId === +id) {
+          return {
+            code: 20000,
+            data: alert
+          }
         }
       }
     }

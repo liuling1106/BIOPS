@@ -133,6 +133,6 @@ export default {
 </script>
 <style>
 .app-container{
-  padding: 1px;
+  padding: 2px;
 }
 </style>

@@ -7,3 +7,11 @@ export function fetchList(query) {
     params: query
   })
 }
+export function fetchAlert(id) {
+  return request({
+    url: '/vue-element-admin/alerts/detail',
+    method: 'get',
+    params: { id }
+  })
+}
+
