@@ -17,7 +17,13 @@ export default {
       view: '视图',
       log: '日志',
       site1: '网站 1',
-      site2: '网站 2'
+      site2: '网站 2',
+      businessSegment: 'Business Segment:',
+      origanization: 'Origanization:',
+      queueDetails: 'QueueDetails:',
+      region: '地区:',
+      modality: 'Modality:',
+      language: '语言:'
     }
   },
   en: {
@@ -37,7 +43,13 @@ export default {
       view: 'View',
       log: 'Log',
       site1: 'Site 1',
-      site2: 'Site 2'
+      site2: 'Site 2',
+      businessSegment: 'Business Segment:',
+      origanization: 'Origanization:',
+      queueDetails: 'QueueDetails:',
+      region: 'Region:',
+      modality: 'Modality:',
+      language: 'Language:'
     }
   }
 }

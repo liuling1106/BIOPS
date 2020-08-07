@@ -10,7 +10,7 @@ export default {
   name: 'Alert',
   data() {
     return {
-      AlertCount: 50
+      AlertCount: 6
     }
   }
 }

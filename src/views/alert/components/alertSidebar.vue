@@ -9,7 +9,7 @@
     <div class="container-action">
       <div class="container-box">
         <div class="btn-icon"><svg-icon icon-class="link" /></div>
-        <div class="btn-action">{{ $t('i18nView.assginToMe') }}</div>
+        <div class="btn-action" @click="handleForm">{{ $t('i18nView.assginToMe') }}</div>
       </div>
       <div class="container-box">
         <div class="btn-icon"><i class="el-icon-platform-eleme" /></div>
@@ -32,6 +32,14 @@
         <div class="btn-view">{{ $t('i18nView.site2') }}</div>
       </div>
     </div>
+    <el-dialog :visible.sync="dialogFormVisible" title="发送给我">
+      <el-form>
+        <el-form-item>
+          <el-button type="primary" @click="submitTome('xiaojing')">提交</el-button>
+          <el-button @click="resetForm('numberValidateForm')">重置</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
@@ -57,6 +65,12 @@ export default {
       }
     }
   },
+  data() {
+    return {
+      dialogFormVisible: false,
+      assignedTo: 'Xiaojing'
+    }
+  },
   created() {
     if (!this.$i18n.getLocaleMessage('en')[viewName]) {
       this.$i18n.mergeLocaleMessage('en', local.en)
@@ -67,6 +81,13 @@ export default {
     toggleSideBar() {
       console.log('...')
       this.$store.dispatch('app/toggleAlertBar')
+    },
+    handleForm() {
+      this.dialogFormVisible = true
+    },
+    submitTome(name) {
+      this.$emit('changeName', name)
+      console.log('zi 确定按钮，调用父组件方法')
     }
   }
 }
@@ -107,14 +128,16 @@ export default {
 .container-box{
   font-size: 14px;
   width: 100%;
-  height: 1.6rem;
-  background-color: #2dca83;
+  height: 2rem;
+  cursor: pointer;
+  background-color: #c5e0b4;
   border: 0.1px solid rgb(87, 79, 79);
 }
 .btn-action{
   display: inline-block;
   padding-left: 20%;
   padding-right: 20%;
+  line-height: 2rem;
 }
 .btn-icon{
   display: inline-block;
@@ -136,5 +159,6 @@ export default {
 }
 .btn-view{
   padding-left: 10%;
+  line-height: 2rem;
 }
 </style>
