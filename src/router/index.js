@@ -86,13 +86,22 @@ export const constantRoutes = [
       {
         path: 'alert/detail/:alertId',
         component: () => import('@/views/alert/detail'),
-        name: 'Alerts Details',
+        name: 'alertsDetails',
         meta: {
           title: 'alertsDetail'
         },
         hidden: true
       }
     ]
+  },
+  {
+    path: 'alert/detail/:alertId',
+    component: () => import('@/views/alert/detail'),
+    name: 'alertsDetails',
+    meta: {
+      title: 'alertsDetail'
+    },
+    hidden: true
   },
   {
     path: '/map',
