@@ -1,6 +1,6 @@
 <template>
   <div class="app-container-1" :class="classObj">
-    <div class="alert-sidebar"> <alert-sidebar @changeName="changeAssaginTo" /></div>
+    <div class="alert-sidebar"> <alert-sidebar :alert-status="dataValue.status" @changeName="changeAssaginTo" @btnResolve="resolve" /></div>
     <div class="alert-content">
       <div class="detail-header">{{ titleLevel }} | {{ dataValue.alertId }}
         <div v-if="alertbar.opened" class="alertToggle">
@@ -41,24 +41,16 @@
       </div>
       <div class="detail-metric">
         <el-row class="detail-metric-row">
-          <el-col :xs="4" :sm="4" :md="4" :lg="4"><div class="">Metric1</div></el-col>
-          <el-col :xs="2" :sm="2" :md="2" :lg="2"><div class="">{{ dataValue.metric1 }}</div></el-col>
-          <el-col :xs="4" :sm="4" :md="4" :lg="4"><div class="">Metric2</div></el-col>
-          <el-col :xs="2" :sm="2" :md="2" :lg="2"><div class="">{{ dataValue.metric2 }}</div></el-col>
-          <el-col :xs="4" :sm="4" :md="4" :lg="4"><div class="">Metric3</div></el-col>
-          <el-col :xs="2" :sm="2" :md="2" :lg="2"><div class="">{{ dataValue.metric3 }}</div></el-col>
-          <el-col :xs="4" :sm="4" :md="4" :lg="4"><div class="">Metric4</div></el-col>
-          <el-col :xs="2" :sm="2" :md="2" :lg="2"><div class="">{{ dataValue.metric4 }}</div></el-col>
+          <el-col :xs="6" :sm="6" :md="6" :lg="6"><div class=""><span class="for-label">{{ $t('i18nView.metric1') }}</span> <span>{{ dataValue.metric1 }}</span></div></el-col>
+          <el-col :xs="6" :sm="6" :md="6" :lg="6"><div class=""><span class="for-label">{{ $t('i18nView.metric2') }}</span> <span>{{ dataValue.metric2 }}</span></div></el-col>
+          <el-col :xs="6" :sm="6" :md="6" :lg="6"><div class=""><span class="for-label">{{ $t('i18nView.metric3') }}</span> <span>{{ dataValue.metric3 }}</span></div></el-col>
+          <el-col :xs="6" :sm="6" :md="6" :lg="6"><div class=""><span class="for-label">{{ $t('i18nView.metric4') }}</span> <span>{{ dataValue.metric4 }}</span></div></el-col>
         </el-row>
         <el-row class="detail-metric-row">
-          <el-col :xs="4" :sm="4" :md="4" :lg="4"><div class="">Metric5</div></el-col>
-          <el-col :xs="2" :sm="2" :md="2" :lg="2"><div class="">{{ dataValue.metric5 }}</div></el-col>
-          <el-col :xs="4" :sm="4" :md="4" :lg="4"><div class="">Metric6</div></el-col>
-          <el-col :xs="2" :sm="2" :md="2" :lg="2"><div class="">{{ dataValue.metric6 }}</div></el-col>
-          <el-col :xs="4" :sm="4" :md="4" :lg="4"><div class="">Metric7</div></el-col>
-          <el-col :xs="2" :sm="2" :md="2" :lg="2"><div class="">{{ dataValue.metric7 }}</div></el-col>
-          <el-col :xs="4" :sm="4" :md="4" :lg="4"><div class="">Metric8</div></el-col>
-          <el-col :xs="2" :sm="2" :md="2" :lg="2"><div class="">{{ dataValue.metric8 }}</div></el-col>
+          <el-col :xs="6" :sm="6" :md="6" :lg="6"><div class=""><span class="for-label">{{ $t('i18nView.metric5') }}</span> <span>{{ dataValue.metric5 }}</span></div></el-col>
+          <el-col :xs="6" :sm="6" :md="6" :lg="6"><div class=""><span class="for-label">{{ $t('i18nView.metric6') }}</span> <span>{{ dataValue.metric6 }}</span></div></el-col>
+          <el-col :xs="6" :sm="6" :md="6" :lg="6"><div class=""><span class="for-label">{{ $t('i18nView.metric7') }}</span> <span>{{ dataValue.metric7 }}</span></div></el-col>
+          <el-col :xs="6" :sm="6" :md="6" :lg="6"><div class=""><span class="for-label">{{ $t('i18nView.metric8') }}</span> <span>{{ dataValue.metric8 }}</span></div></el-col>
         </el-row>
       </div>
       <div class="detail-site">
@@ -205,12 +197,12 @@ const viewName = 'i18nView'
 // import { fetchArticle } from '@/api/article'
 
 const detailsLIst = []
-detailsLIst.push({ 'alertId': '07042020-1002', 'level': '3', 'assignedTo': 'NIcholas Cook', 'ivrEnabled': 'No', 'bridgeActive': 'No', 'startTime': '2020-07-05', 'upgradeTime': '2020-07-08', 'endTime': '2020-07-10', 'triggerCriteria': '(Metric1 > 10 & Metric2 > 5) OR (Metric 8 < 50%)', 'businessSegment': 'Modern Lift, Gaming & Customer Service', 'origanization': 'O365/Office', 'queueDetails': 'UR Office', 'region': 'NA', 'modality': 'Phone Inbound', 'language': 'English', 'sites': [{ 'siteName': 'CNX Bangalore', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }] })
-detailsLIst.push({ 'alertId': '07042020-1003', 'level': '1', 'assignedTo': 'New', 'ivrEnabled': 'No', 'bridgeActive': 'Yes', 'startTime': '2020-07-06', 'upgradeTime': '2020-07-08', 'endTime': '2020-07-12', 'triggerCriteria': '[LongesQueueTime]>=15', 'businessSegment': 'Modern Lift, Gaming & Customer Service', 'origanization': 'O365/Office', 'queueDetails': 'TS Windows', 'region': 'Xbox', 'modality': 'Phone Inbound', 'language': 'English', 'sites': [{ 'siteName': 'NTC Sapporo', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }, { 'siteName': 'NTC tokyo', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }] })
-detailsLIst.push({ 'alertId': '07042020-1004', 'level': '2', 'assignedTo': 'NIcholas Cook', 'ivrEnabled': 'Yes', 'bridgeActive': 'No', 'startTime': '2020-07-06', 'upgradeTime': '2020-07-09', 'endTime': '2020-07-13', 'triggerCriteria': '[LongesQueueTime]>=15 and [CallsInQueue]>=5', 'businessSegment': 'Modern Lift, Gaming & Customer Service', 'origanization': 'O365/Office', 'queueDetails': 'Xbox All', 'region': 'EMEA: Latarn', 'modality': 'Click 2 Call', 'language': 'Japan', 'sites': [{ 'siteName': 'NTC tokyo', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }] })
-detailsLIst.push({ 'alertId': '07042020-1005', 'level': '1', 'assignedTo': 'NIcholas Cook', 'ivrEnabled': 'Yes', 'bridgeActive': 'Yes', 'startTime': '2020-07-06', 'upgradeTime': '2020-07-09', 'endTime': '2020-07-13', 'triggerCriteria': '[LongesQueueTime]>=6 and [CallsInQueue]>=15', 'businessSegment': 'Modern Lift, Gaming & Customer Service', 'origanization': 'O365/Office', 'queueDetails': 'UR Office', 'region': 'Global', 'modality': 'Phone Inbound', 'language': 'French', 'sites': [{ 'siteName': 'Relia Yokohama', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }] })
-detailsLIst.push({ 'alertId': '07042020-1006', 'level': '4', 'assignedTo': 'NIcholas Cook', 'ivrEnabled': 'No', 'bridgeActive': 'Yes', 'startTime': '2020-07-07', 'upgradeTime': '2020-07-10', 'endTime': '2020-07-15', 'triggerCriteria': '[LongesQueueTime]>=15', 'businessSegment': 'Modern Lift, Gaming & Customer Service', 'origanization': 'Windows', 'queueDetails': 'Surface consumer Tech Support', 'region': 'NA', 'modality': 'Phone Inbound', 'language': 'English', 'sites': [{ 'siteName': 'CNX kuala Lumpur', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }, { 'siteName': 'Avanade Taguig', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }] })
-detailsLIst.push({ 'alertId': '07042020-1007', 'level': '1', 'assignedTo': 'New', 'ivrEnabled': 'Yes', 'bridgeActive': 'No', 'startTime': '2020-07-07', 'upgradeTime': '2020-07-10', 'endTime': '2020-07-15', 'triggerCriteria': '[CallsINQueue]>=50', 'businessSegment': 'Modern Lift, Gaming & Customer Service', 'origanization': 'Xbox', 'queueDetails': 'UR Office', 'region': 'Japan', 'modality': 'Phone Inbound', 'language': 'Spanish', 'sites': [{ 'siteName': 'Avanade Taguig', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }, { 'siteName': 'NTC tokyo', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }] })
+detailsLIst.push({ 'alertId': '07042020-1002', 'status': 'New', 'level': '3', 'assignedTo': 'NIcholas Cook', 'ivrEnabled': 'No', 'bridgeActive': 'No', 'startTime': '2020-07-05', 'upgradeTime': '2020-07-08', 'endTime': '2020-07-10', 'triggerCriteria': '(Metric1 > 10 & Metric2 > 5) OR (Metric 8 < 50%)', 'businessSegment': 'Modern Lift, Gaming & Customer Service', 'origanization': 'O365/Office', 'queueDetails': 'UR Office', 'region': 'NA', 'modality': 'Phone Inbound', 'language': 'English', 'sites': [{ 'siteName': 'CNX Bangalore', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }], 'metric1': '20', 'metric2': '45', 'metric3': '30', 'metric4': '32', 'metric5': '16', 'metric6': '55', 'metric7': '42', 'metric8': '42%' })
+detailsLIst.push({ 'alertId': '07042020-1003', 'status': 'New', 'level': '1', 'assignedTo': 'New', 'ivrEnabled': 'No', 'bridgeActive': 'Yes', 'startTime': '2020-07-06', 'upgradeTime': '2020-07-08', 'endTime': '2020-07-12', 'triggerCriteria': '[LongesQueueTime]>=15', 'businessSegment': 'Modern Lift, Gaming & Customer Service', 'origanization': 'O365/Office', 'queueDetails': 'TS Windows', 'region': 'Xbox', 'modality': 'Phone Inbound', 'language': 'English', 'sites': [{ 'siteName': 'NTC Sapporo', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }, { 'siteName': 'NTC tokyo', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }], 'metric1': '5', 'metric2': '11', 'metric3': '42', 'metric4': '35', 'metric5': '18', 'metric6': '86', 'metric7': '23', 'metric8': '35%' })
+detailsLIst.push({ 'alertId': '07042020-1004', 'status': 'Active', 'level': '2', 'assignedTo': 'NIcholas Cook', 'ivrEnabled': 'Yes', 'bridgeActive': 'No', 'startTime': '2020-07-06', 'upgradeTime': '2020-07-09', 'endTime': '2020-07-13', 'triggerCriteria': '[LongesQueueTime]>=15 and [CallsInQueue]>=5', 'businessSegment': 'Modern Lift, Gaming & Customer Service', 'origanization': 'O365/Office', 'queueDetails': 'Xbox All', 'region': 'EMEA: Latarn', 'modality': 'Click 2 Call', 'language': 'Japan', 'sites': [{ 'siteName': 'NTC tokyo', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }], 'metric1': '23', 'metric2': '54', 'metric3': '12', 'metric4': '83', 'metric5': '20', 'metric6': '7', 'metric7': '35', 'metric8': '22%' })
+detailsLIst.push({ 'alertId': '07042020-1005', 'status': 'Active', 'level': '1', 'assignedTo': 'NIcholas Cook', 'ivrEnabled': 'Yes', 'bridgeActive': 'Yes', 'startTime': '2020-07-06', 'upgradeTime': '2020-07-09', 'endTime': '2020-07-13', 'triggerCriteria': '[LongesQueueTime]>=6 and [CallsInQueue]>=15', 'businessSegment': 'Modern Lift, Gaming & Customer Service', 'origanization': 'O365/Office', 'queueDetails': 'UR Office', 'region': 'Global', 'modality': 'Phone Inbound', 'language': 'French', 'sites': [{ 'siteName': 'Relia Yokohama', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }], 'metric1': '5', 'metric2': '11', 'metric3': '42', 'metric4': '35', 'metric5': '18', 'metric6': '86', 'metric7': '23', 'metric8': '39%' })
+detailsLIst.push({ 'alertId': '07042020-1006', 'status': 'Resolved', 'level': '4', 'assignedTo': 'NIcholas Cook', 'ivrEnabled': 'No', 'bridgeActive': 'Yes', 'startTime': '2020-07-07', 'upgradeTime': '2020-07-10', 'endTime': '2020-07-15', 'triggerCriteria': '[LongesQueueTime]>=15', 'businessSegment': 'Modern Lift, Gaming & Customer Service', 'origanization': 'Windows', 'queueDetails': 'Surface consumer Tech Support', 'region': 'NA', 'modality': 'Phone Inbound', 'language': 'English', 'sites': [{ 'siteName': 'CNX kuala Lumpur', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }, { 'siteName': 'Avanade Taguig', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }], 'metric1': '65', 'metric2': '51', 'metric3': '44', 'metric4': '35', 'metric5': '26', 'metric6': '53', 'metric7': '23', 'metric8': '35%' })
+detailsLIst.push({ 'alertId': '07042020-1007', 'status': 'Resolved', 'level': '1', 'assignedTo': 'Admin', 'ivrEnabled': 'Yes', 'bridgeActive': 'No', 'startTime': '2020-07-07', 'upgradeTime': '2020-07-10', 'endTime': '2020-07-15', 'triggerCriteria': '[CallsINQueue]>=50', 'businessSegment': 'Modern Lift, Gaming & Customer Service', 'origanization': 'Xbox', 'queueDetails': 'UR Office', 'region': 'Japan', 'modality': 'Phone Inbound', 'language': 'Spanish', 'sites': [{ 'siteName': 'Avanade Taguig', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }, { 'siteName': 'NTC tokyo', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }], 'metric1': '95', 'metric2': '32', 'metric3': '45', 'metric4': '14', 'metric5': '95', 'metric6': '56', 'metric7': '11', 'metric8': '22%' })
 
 const initData = { 'alertId': '07042020-1002', 'level': '3', 'assignedTo': 'NIcholas Cook', 'ivrEnabled': 'No', 'bridgeActive': 'No', 'startTime': '2020-07-05', 'upgradeTime': '2020-07-08', 'endTime': '2020-07-10', 'triggerCriteria': '(Metric1 > 10 & Metric2 > 5) OR (Metric 8 < 50%)', 'businessSegment': 'Modern Lift, Gaming & Customer Service', 'origanization': 'O365/Office', 'queueDetails': 'UR Office', 'region': 'NA', 'modality': 'Phone Inbound', 'language': 'English', 'sites': [{ 'siteName': 'CNX Bangalore', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }] }
 
@@ -227,7 +219,8 @@ export default {
   },
   computed: {
     ...mapState({
-      alertbar: state => state.app.alertbar
+      alertbar: state => state.app.alertbar,
+      currentUser: state => state.user.name
     }),
     classObj() {
       return {
@@ -284,9 +277,32 @@ export default {
     tableRowClassName({ row, rowIndex }) {
       return 'background-row'
     },
-    changeAssaginTo(name) {
-      console.log('触发父组件修改方法')
-      this.dataValue.assignedTo = name
+    changeAssaginTo() {
+      try {
+        this.dataValue.assignedTo = this.currentUser
+        this.showNotification()
+      } catch (error) {
+        return false
+      }
+    },
+    resolve(status) {
+      try {
+        console.log('父方法中的status' + status)
+        this.dataValue.status = status
+        return true
+      } catch (error) {
+        return false
+      }
+    },
+    showNotification() {
+      this.$notify.error({
+        title: this.$t('i18nView.newAlert'),
+        // message: this.$t('i18nView.assgintoNewalert'),
+        dangerouslyUseHTMLString: true,
+        // message: '<strong>这是 <i>HTML</i> 片段</strong><a href="#/alert/detail/' + this.dataValue.alertId + '">cha kan xiangqing</a>',
+        message: '<span>' + this.$t('i18nView.assgintoNewalert') + '</span><a href="#/alert/detail/07042020-1003" class="link-type">' + this.$t('i18nView.seeMoreDetail') + '</a>',
+        duration: 3600
+      })
     }
   }
 }

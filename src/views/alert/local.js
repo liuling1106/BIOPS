@@ -13,6 +13,7 @@ export default {
       assginToMe: '发送给我',
       ivrMessage: 'IVR 信息',
       resolve: '解决',
+      reactivate: 'Reactivate',
       actions: '动作',
       view: '视图',
       log: '日志',
@@ -23,7 +24,18 @@ export default {
       queueDetails: 'QueueDetails:',
       region: '地区:',
       modality: 'Modality:',
-      language: '语言:'
+      language: '语言:',
+      metric1: 'Metric1:',
+      metric2: 'Metric2:',
+      metric3: 'Metric3:',
+      metric4: 'Metric4:',
+      metric5: 'Metric5:',
+      metric6: 'Metric6:',
+      metric7: 'Metric7:',
+      metric8: 'Metric8:',
+      newAlert: '新的告警',
+      assgintoNewalert: '有人发送给你一个新的告警',
+      seeMoreDetail: '查看详情'
     }
   },
   en: {
@@ -39,6 +51,7 @@ export default {
       assginToMe: 'Assgin To Me',
       ivrMessage: 'IVR Message',
       resolve: 'Resolve',
+      reactivate: 'Reactivate',
       actions: 'Actions',
       view: 'View',
       log: 'Log',
@@ -49,7 +62,18 @@ export default {
       queueDetails: 'QueueDetails:',
       region: 'Region:',
       modality: 'Modality:',
-      language: 'Language:'
+      language: 'Language:',
+      metric1: 'Metric1:',
+      metric2: 'Metric2:',
+      metric3: 'Metric3:',
+      metric4: 'Metric4:',
+      metric5: 'Metric5:',
+      metric6: 'Metric6:',
+      metric7: 'Metric7:',
+      metric8: 'Metric8:',
+      newAlert: 'Have a new alert',
+      assgintoNewalert: 'Some one assgin to you a new alert',
+      seeMoreDetail: 'See more details'
     }
   }
 }

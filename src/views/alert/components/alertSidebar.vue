@@ -7,17 +7,17 @@
       <div class="alertbar-title">{{ $t('i18nView.actions') }}</div>
     </div>
     <div class="container-action">
-      <div class="container-box">
+      <div class="container-box" :class="{'not-click':notClick}">
         <div class="btn-icon"><svg-icon icon-class="link" /></div>
-        <div class="btn-action" @click="handleForm">{{ $t('i18nView.assginToMe') }}</div>
+        <div class="btn-action" @click="handleAssginToMe">{{ $t('i18nView.assginToMe') }}</div>
       </div>
-      <div class="container-box">
+      <div class="container-box" :class="{'not-click':notClick}">
         <div class="btn-icon"><i class="el-icon-platform-eleme" /></div>
         <div class="btn-action">{{ $t('i18nView.ivrMessage') }}</div>
       </div>
       <div class="container-box">
         <div class="btn-icon"><i class="el-icon-video-camera-solid" /></div>
-        <div class="btn-action">{{ $t('i18nView.resolve') }}</div>
+        <div class="btn-action" @click="handleResolve()">{{ resolveText }}</div>
       </div>
     </div>
     <div class="container-view">
@@ -32,14 +32,14 @@
         <div class="btn-view">{{ $t('i18nView.site2') }}</div>
       </div>
     </div>
-    <el-dialog :visible.sync="dialogFormVisible" title="发送给我">
+    <!-- <el-dialog :visible.sync="dialogFormVisible" title="发送给我">
       <el-form>
         <el-form-item>
           <el-button type="primary" @click="submitTome('xiaojing')">提交</el-button>
           <el-button @click="resetForm('numberValidateForm')">重置</el-button>
         </el-form-item>
       </el-form>
-    </el-dialog>
+    </el-dialog> -->
   </div>
 </template>
 
@@ -54,6 +54,21 @@ export default {
   components: {
     AlertHamburger
   },
+  notClick: {
+    type: Boolean,
+    default: false
+  },
+  props: {
+    alertStatus: {
+      type: String,
+      required: true
+    }
+  },
+  data() {
+    return {
+      notClick: false
+    }
+  },
   computed: {
     ...mapState({
       alertbar: state => state.app.alertbar
@@ -63,12 +78,20 @@ export default {
         hideAlertbar: !this.alertbar.opened,
         openAlertbar: this.alertbar.opened
       }
-    }
-  },
-  data() {
-    return {
-      dialogFormVisible: false,
-      assignedTo: 'Xiaojing'
+    },
+    resolveText: {
+      get() {
+        console.log('...' + this.alertStatus)
+        // return 'Level' + this.alertStatus
+        if (this.alertStatus === 'Resolved') {
+          return this.$t('i18nView.reactivate')
+        } else {
+          return this.$t('i18nView.resolve')
+        }
+      },
+      set(val) {
+        this.alertStatus = val
+      }
     }
   },
   created() {
@@ -76,18 +99,37 @@ export default {
       this.$i18n.mergeLocaleMessage('en', local.en)
       this.$i18n.mergeLocaleMessage('zh', local.zh)
     }
+    if (this.alertStatus === 'Resolved') {
+      this.notClick = true
+    } else {
+      this.notClick = false
+    }
+    // console.log('...' + this.alertStatus)
   },
   methods: {
     toggleSideBar() {
-      console.log('...')
       this.$store.dispatch('app/toggleAlertBar')
     },
-    handleForm() {
-      this.dialogFormVisible = true
+    handleAssginToMe() {
+      this.$emit('changeName')
+      // if (this.$emit('changeName')) {
+      //   setTimeout(() => {
+      //     // TODO how to add router in notification
+      //     this.showNotification()
+      //   }, 800)
+      // }
     },
-    submitTome(name) {
-      this.$emit('changeName', name)
-      console.log('zi 确定按钮，调用父组件方法')
+    handleResolve() {
+      if (this.alertStatus === 'Resolved') {
+        if (this.$emit('btnResolve', 'Active')) {
+          this.notClick = false
+        // console.log(this.alertStatus + '.dianji anniu wanbi')
+        }
+      } else {
+        if (this.$emit('btnResolve', 'Resolved')) {
+          this.notClick = true
+        }
+      }
     }
   }
 }
@@ -160,5 +202,9 @@ export default {
 .btn-view{
   padding-left: 10%;
   line-height: 2rem;
+}
+.not-click{
+  pointer-events: none;
+  background-color: #dbdbdb;
 }
 </style>
