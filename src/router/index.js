@@ -85,10 +85,19 @@ export const constantRoutes = [
       },
       {
         path: 'alert/detail/:alertId',
-        component: () => import('@/views/alert/detail'),
+        component: () => import('@/views/alert/alertDetail'),
         name: 'alertsDetails',
         meta: {
           title: 'alertsDetail'
+        },
+        hidden: true
+      },
+      {
+        path: 'alert/detail/:alertId/IVRMessaging',
+        component: () => import('@/views/alert/detailIVR'),
+        name: 'alertsDetailsIVR',
+        meta: {
+          title: 'alertsDetailsIVR'
         },
         hidden: true
       }

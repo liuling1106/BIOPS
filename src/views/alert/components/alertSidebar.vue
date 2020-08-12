@@ -13,7 +13,8 @@
       </div>
       <div class="container-box" :class="{'not-click':notClick}">
         <div class="btn-icon"><i class="el-icon-platform-eleme" /></div>
-        <div class="btn-action">{{ $t('i18nView.ivrMessage') }}</div>
+        <!-- <div class="btn-action"><router-link :to=" + alertId+ '/IVRMessaging'">{{ $t('i18nView.ivrMessage') }}|{{ alertId }}</router-link></div> -->
+        <div class="btn-action"><router-link :to="{path: '/alert/detail/'+alertId+'/IVRMessaging'}">{{ $t('i18nView.ivrMessage') }}</router-link></div>
       </div>
       <div class="container-box">
         <div class="btn-icon"><i class="el-icon-video-camera-solid" /></div>
@@ -62,6 +63,10 @@ export default {
     alertStatus: {
       type: String,
       required: true
+    },
+    alertId: {
+      type: String,
+      required: true
     }
   },
   data() {
@@ -95,6 +100,7 @@ export default {
     }
   },
   created() {
+    console.log('alertId...' + this.alertId)
     if (!this.$i18n.getLocaleMessage('en')[viewName]) {
       this.$i18n.mergeLocaleMessage('en', local.en)
       this.$i18n.mergeLocaleMessage('zh', local.zh)

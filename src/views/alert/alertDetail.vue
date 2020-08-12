@@ -1,6 +1,33 @@
 <template>
   <div class="app-container-1" :class="classObj">
-    <div class="alert-sidebar"> <alert-sidebar :alert-status="dataValue.status" :alert-id="dataValue.alertId" @changeName="changeAssaginTo" @btnResolve="resolve" /></div>
+    <div class="alert-sidebar">
+      <right-pannel>
+        <div class="container-action">
+          <div class="container-box" :class="{'not-click':notClick}">
+            <div class="btn-icon"><svg-icon icon-class="link" /></div>
+            <div class="btn-action" @click="handleAssginToMe">{{ $t('i18nView.assginToMe') }}</div>
+          </div>
+          <div class="container-box" :class="{'not-click':notClick}">
+            <div class="btn-icon"><i class="el-icon-platform-eleme" /></div>
+            <!-- <div class="btn-action"><router-link :to=" + alertId+ '/IVRMessaging'">{{ $t('i18nView.ivrMessage') }}|{{ alertId }}</router-link></div> -->
+            <div class="btn-action"><router-link :to="{path: '/alert/detail/'+dataValue.alertId+'/IVRMessaging'}">{{ $t('i18nView.ivrMessage') }}</router-link></div>
+          </div>
+          <div class="container-box">
+            <div class="btn-icon"><i class="el-icon-video-camera-solid" /></div>
+            <div class="btn-action" @click="handleResolve()">{{ resolveText }}</div>
+          </div>
+        </div>
+        <div class="container-view">
+          <div class="view-title">{{ $t('i18nView.view') }}</div>
+          <div class="container-box">
+            <div class="btn-view">{{ $t('i18nView.log') }}</div>
+          </div>
+          <div v-for="(item, index) in dataValue.sites" :key="index" class="container-box" @click="showSiteDetail(index)">
+            <div class="btn-view">{{ item.siteName }}</div>
+          </div>
+        </div>
+      </right-pannel>
+    </div>
     <div class="alert-content">
       <div class="detail-header">{{ titleLevel }} | {{ dataValue.alertId }}
         <div v-if="alertbar.opened" class="alertToggle">
@@ -94,12 +121,10 @@
 
 <script>
 import { mapState } from 'vuex'
-import local from './local'
 import AlertHamburger from '@/components/Hamburger/alertHamburger'
-import AlertSidebar from '@/views/alert/components/alertSidebar'
+import RightPannel from './components/rightPannel'
+import local from './local'
 const viewName = 'i18nView'
-// import { fetchAlert } from '@/api/alerts'
-// import { fetchArticle } from '@/api/article'
 
 const detailsLIst = []
 detailsLIst.push({ 'alertId': '07042020-1002', 'status': 'New', 'level': '3', 'assignedTo': 'NIcholas Cook', 'ivrEnabled': 'No', 'bridgeActive': 'No', 'startTime': '2020-07-05', 'upgradeTime': '2020-07-08', 'endTime': '2020-07-10', 'triggerCriteria': '(Metric1 > 10 & Metric2 > 5) OR (Metric 8 < 50%)', 'businessSegment': 'Modern Lift, Gaming & Customer Service', 'origanization': 'O365/Office', 'queueDetails': 'UR Office', 'region': 'NA', 'modality': 'Phone Inbound', 'language': 'English', 'sites': [{ 'siteName': 'CNX Bangalore', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }], 'metric1': '20', 'metric2': '45', 'metric3': '30', 'metric4': '32', 'metric5': '16', 'metric6': '55', 'metric7': '42', 'metric8': '42%' })
@@ -115,11 +140,13 @@ export default {
   name: 'AlertDetail',
   components: {
     AlertHamburger,
-    AlertSidebar
+    RightPannel
   },
   data() {
     return {
-      dataValue: Object.assign({}, initData)
+      notClick: false,
+      dataValue: Object.assign({}, initData),
+      siteName: 'Site 1'
     }
   },
   computed: {
@@ -131,6 +158,18 @@ export default {
       return {
         hideAlertbar: !this.alertbar.opened,
         openAlertbar: this.alertbar.opened
+      }
+    },
+    resolveText: {
+      get() {
+        if (this.dataValue.status === 'Resolved') {
+          return this.$t('i18nView.reactivate')
+        } else {
+          return this.$t('i18nView.resolve')
+        }
+      },
+      set(val) {
+        this.alertStatus = val
       }
     },
     titleLevel: {
@@ -179,25 +218,18 @@ export default {
       //   console.log(err)
       // })
     },
-    tableRowClassName({ row, rowIndex }) {
-      return 'background-row'
+    handleAssginToMe() {
+      this.dataValue.assignedTo = this.currentUser
+      this.showNotification()
     },
-    changeAssaginTo() {
-      try {
-        this.dataValue.assignedTo = this.currentUser
-        this.showNotification()
-      } catch (error) {
-        return false
+    handleResolve() {
+      let changedStatus = 'Resolved'
+      this.notClick = true
+      if (this.dataValue.status === 'Resolved') {
+        changedStatus = 'Active'
+        this.notClick = false
       }
-    },
-    resolve(status) {
-      try {
-        console.log('父方法中的status' + status)
-        this.dataValue.status = status
-        return true
-      } catch (error) {
-        return false
-      }
+      this.dataValue.status = changedStatus
     },
     showNotification() {
       this.$notify.error({
@@ -208,17 +240,21 @@ export default {
         message: '<span>' + this.$t('i18nView.assgintoNewalert') + '</span><a href="#/alert/detail/07042020-1003" class="link-type">' + this.$t('i18nView.seeMoreDetail') + '</a>',
         duration: 3600
       })
+    },
+    tableRowClassName({ row, rowIndex }) {
+      return 'background-row'
+    },
+    showSiteDetail(index) {
+      alert(index)
     }
   }
 }
 </script>
 <style lang="scss">
-  // @import "~@/styles/alertbar.scss";
-
-   span {
+ span {
        padding-right: 10px;
      }
-  .app-container-1{
+.app-container-1{
     padding: 2px;
     border: 1px solid #A5C2E6;
     min-height: calc(100vh - 84px);
@@ -273,6 +309,18 @@ export default {
           background: rgba(0, 0, 0, .025)
         }
       }
+    .not-click{
+        pointer-events: none;
+        background-color: #dbdbdb;
+    }
+
+    .detail-header{
+    background-color: #A5C2E6;
+    height: 35px;
+    border: 1px solid #4472c4;
+    line-height: 35px;
+    padding-left: 20px;
+  }
   .detail-attribute{
     padding: 20px;
     border: 1px solid #A5C2E6;
