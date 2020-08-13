@@ -140,7 +140,7 @@ export default {
   }
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .alertbar-container{
    background-color: #A5C2E6;
    min-height: calc(100vh - 84px);

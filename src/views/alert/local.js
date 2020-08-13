@@ -35,7 +35,25 @@ export default {
       metric8: 'Metric8:',
       newAlert: '新的告警',
       assgintoNewalert: '有人发送给你一个新的告警',
-      seeMoreDetail: '查看详情'
+      seeMoreDetail: '查看详情',
+      customlogEntry: '自定义用户日志',
+      inquiryRequest: '发送请求',
+      sitePhone: 'Site Phone:',
+      distributionList: 'Distribution List:',
+      primarySDM: 'Primary SDM:',
+      secondarySDM: 'Secondary SDM:',
+      tertiarySDM: 'Tertiary SDM: ',
+      lastContactTime: 'Last Contact Time:',
+      timeElapsed: 'Time Elapsed:',
+      Monday: 'Monday',
+      Tuesday: 'Tuesday',
+      Wednesday: 'Wednesday',
+      Thursday: 'Thursday',
+      Friday: 'Friday',
+      Saturday: 'Saturday',
+      Sunday: 'Sunday',
+      howrofoperation: 'Hour of Operation (PST):',
+      status: 'Status'
     }
   },
   en: {
@@ -73,7 +91,25 @@ export default {
       metric8: 'Metric8:',
       newAlert: 'Have a new alert',
       assgintoNewalert: 'Some one assgin to you a new alert',
-      seeMoreDetail: 'See more details'
+      seeMoreDetail: 'See more details',
+      customlogEntry: 'Custom Log Entry',
+      inquiryRequest: 'Inquiry Request',
+      sitePhone: 'Site Phone:',
+      distributionList: 'Distribution List:',
+      primarySDM: 'Primary SDM:',
+      secondarySDM: 'Secondary SDM:',
+      tertiarySDM: 'Tertiary SDM: ',
+      lastContactTime: 'Last Contact Time:',
+      timeElapsed: 'Time Elapsed:',
+      Monday: 'Monday:',
+      Tuesday: 'Tuesday:',
+      Wednesday: 'Wednesday:',
+      Thursday: 'Thursday:',
+      Friday: 'Friday:',
+      Saturday: 'Saturday:',
+      Sunday: 'Sunday:',
+      howrofoperation: 'Hour of Operation (PST)',
+      status: 'Status'
     }
   }
 }

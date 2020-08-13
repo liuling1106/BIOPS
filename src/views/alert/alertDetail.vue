@@ -10,7 +10,7 @@
           <div class="container-box" :class="{'not-click':notClick}">
             <div class="btn-icon"><i class="el-icon-platform-eleme" /></div>
             <!-- <div class="btn-action"><router-link :to=" + alertId+ '/IVRMessaging'">{{ $t('i18nView.ivrMessage') }}|{{ alertId }}</router-link></div> -->
-            <div class="btn-action"><router-link :to="{path: '/alert/detail/'+dataValue.alertId+'/IVRMessaging'}">{{ $t('i18nView.ivrMessage') }}</router-link></div>
+            <router-link :to="{path: '/alert/detail/'+dataValue.alertId+'/IVRMessaging'}"><div class="btn-action">{{ $t('i18nView.ivrMessage') }}</div></router-link>
           </div>
           <div class="container-box">
             <div class="btn-icon"><i class="el-icon-video-camera-solid" /></div>
@@ -20,10 +20,10 @@
         <div class="container-view">
           <div class="view-title">{{ $t('i18nView.view') }}</div>
           <div class="container-box">
-            <div class="btn-view">{{ $t('i18nView.log') }}</div>
+            <router-link :to="{path: '/alert/detail/'+dataValue.alertId+'/Log'}"><div class="btn-view">{{ $t('i18nView.log') }}</div></router-link>
           </div>
-          <div v-for="(item, index) in dataValue.sites" :key="index" class="container-box" @click="showSiteDetail(index)">
-            <div class="btn-view">{{ item.siteName }}</div>
+          <div v-for="(item, index) in dataValue.sites" :key="index" class="container-box">
+            <router-link :to="{path: '/alert/detail/'+dataValue.alertId+'/' + item.siteName}"><div class="btn-view">{{ item.siteName }}</div></router-link>
           </div>
         </div>
       </right-pannel>
@@ -250,7 +250,7 @@ export default {
   }
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
  span {
        padding-right: 10px;
      }

@@ -100,17 +100,26 @@ export const constantRoutes = [
           title: 'alertsDetailsIVR'
         },
         hidden: true
+      },
+      {
+        path: 'alert/detail/:alertId/Log',
+        component: () => import('@/views/alert/alertLog'),
+        name: 'alertLog',
+        meta: {
+          title: 'Log'
+        },
+        hidden: true
+      },
+      {
+        path: 'alert/detail/:alertId/:siteName',
+        component: () => import('@/views/alert/alertSite'),
+        name: 'alertSite',
+        meta: {
+          title: 'Site'
+        },
+        hidden: true
       }
     ]
-  },
-  {
-    path: 'alert/detail/:alertId',
-    component: () => import('@/views/alert/detail'),
-    name: 'alertsDetails',
-    meta: {
-      title: 'alertsDetail'
-    },
-    hidden: true
   },
   {
     path: '/map',
