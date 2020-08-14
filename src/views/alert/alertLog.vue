@@ -6,7 +6,7 @@
       <div class="container-action">
         <div class="container-box">
           <div class="btn-icon"><svg-icon icon-class="link" /></div>
-          <div class="btn-action" @click="eventcustomlogEntry">{{ $t('i18nView.customlogEntry') }}</div>
+          <router-link :to="{path: '/alert/detail/'+dataValue.alertId+'/LogEntry'}"><div class="btn-action">{{ $t('i18nView.customlogEntry') }}</div></router-link>
         </div>
       </div>
     </div>
@@ -70,9 +70,6 @@ export default {
     fetchData(id) {
       this.dataValue = detailsLIst.filter(item => item.alertId === id)[0]
       this.dataValue.Logs.reverse()
-    },
-    eventcustomlogEntry() {
-
     }
   }
 }

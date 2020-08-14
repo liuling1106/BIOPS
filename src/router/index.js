@@ -111,6 +111,15 @@ export const constantRoutes = [
         hidden: true
       },
       {
+        path: 'alert/detail/:alertId/LogEntry',
+        component: () => import('@/views/alert/alertLogEntry'),
+        name: 'alertLogEntry',
+        meta: {
+          title: 'alertLogEntry'
+        },
+        hidden: true
+      },
+      {
         path: 'alert/detail/:alertId/:siteName',
         component: () => import('@/views/alert/alertSite'),
         name: 'alertSite',

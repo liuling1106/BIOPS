@@ -14,4 +14,10 @@ export function fetchAlert(id) {
     params: { id }
   })
 }
-
+export function fetchAlertLog(id) {
+  return request({
+    url: '/vue-element-admin/alerts/log',
+    method: 'get',
+    params: { id }
+  })
+}
