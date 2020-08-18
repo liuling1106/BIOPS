@@ -14,6 +14,20 @@ export function fetchAlert(id) {
     params: { id }
   })
 }
+export function alertAssgineTo(data) {
+  return request({
+    url: '/vue-element-admin/alerts/assigendTo',
+    method: 'post',
+    data
+  })
+}
+export function changeAlertStatus(data) {
+  return request({
+    url: '/vue-element-admin/alerts/changeStatus',
+    method: 'post',
+    data
+  })
+}
 export function fetchAlertLog(id) {
   return request({
     url: '/vue-element-admin/alerts/log',

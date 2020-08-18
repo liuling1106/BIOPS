@@ -125,17 +125,17 @@ import AlertHamburger from '@/components/Hamburger/alertHamburger'
 import RightPannel from './components/rightPannel'
 import local from './local'
 const viewName = 'i18nView'
-import { fetchList } from '@/api/alerts'
+import { fetchAlert, alertAssgineTo, changeAlertStatus } from '@/api/alerts'
 
-const detailsLIst = []
-detailsLIst.push({ 'alertId': '07042020-1002', 'status': 'New', 'level': '3', 'assignedTo': 'NIcholas Cook', 'ivrEnabled': 'No', 'bridgeActive': 'No', 'startTime': '2020-07-05', 'upgradeTime': '2020-07-08', 'endTime': '2020-07-10', 'triggerCriteria': '(Metric1 > 10 & Metric2 > 5) OR (Metric 8 < 50%)', 'businessSegment': 'Modern Lift, Gaming & Customer Service', 'origanization': 'O365/Office', 'queueDetails': 'UR Office', 'region': 'NA', 'modality': 'Phone Inbound', 'language': 'English', 'sites': [{ 'siteName': 'CNX Bangalore', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }], 'metric1': '20', 'metric2': '45', 'metric3': '30', 'metric4': '32', 'metric5': '16', 'metric6': '55', 'metric7': '42', 'metric8': '42%' })
-detailsLIst.push({ 'alertId': '07042020-1003', 'status': 'New', 'level': '1', 'assignedTo': 'New', 'ivrEnabled': 'No', 'bridgeActive': 'Yes', 'startTime': '2020-07-06', 'upgradeTime': '2020-07-08', 'endTime': '2020-07-12', 'triggerCriteria': '[LongesQueueTime]>=15', 'businessSegment': 'Modern Lift, Gaming & Customer Service', 'origanization': 'O365/Office', 'queueDetails': 'TS Windows', 'region': 'Xbox', 'modality': 'Phone Inbound', 'language': 'English', 'sites': [{ 'siteName': 'NTC Sapporo', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }, { 'siteName': 'NTC tokyo', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }], 'metric1': '5', 'metric2': '11', 'metric3': '42', 'metric4': '35', 'metric5': '18', 'metric6': '86', 'metric7': '23', 'metric8': '35%' })
-detailsLIst.push({ 'alertId': '07042020-1004', 'status': 'Active', 'level': '2', 'assignedTo': 'NIcholas Cook', 'ivrEnabled': 'Yes', 'bridgeActive': 'No', 'startTime': '2020-07-06', 'upgradeTime': '2020-07-09', 'endTime': '2020-07-13', 'triggerCriteria': '[LongesQueueTime]>=15 and [CallsInQueue]>=5', 'businessSegment': 'Modern Lift, Gaming & Customer Service', 'origanization': 'O365/Office', 'queueDetails': 'Xbox All', 'region': 'EMEA: Latarn', 'modality': 'Click 2 Call', 'language': 'Japan', 'sites': [{ 'siteName': 'NTC tokyo', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }], 'metric1': '23', 'metric2': '54', 'metric3': '12', 'metric4': '83', 'metric5': '20', 'metric6': '7', 'metric7': '35', 'metric8': '22%' })
-detailsLIst.push({ 'alertId': '07042020-1005', 'status': 'Active', 'level': '1', 'assignedTo': 'NIcholas Cook', 'ivrEnabled': 'Yes', 'bridgeActive': 'Yes', 'startTime': '2020-07-06', 'upgradeTime': '2020-07-09', 'endTime': '2020-07-13', 'triggerCriteria': '[LongesQueueTime]>=6 and [CallsInQueue]>=15', 'businessSegment': 'Modern Lift, Gaming & Customer Service', 'origanization': 'O365/Office', 'queueDetails': 'UR Office', 'region': 'Global', 'modality': 'Phone Inbound', 'language': 'French', 'sites': [{ 'siteName': 'Relia Yokohama', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }], 'metric1': '5', 'metric2': '11', 'metric3': '42', 'metric4': '35', 'metric5': '18', 'metric6': '86', 'metric7': '23', 'metric8': '39%' })
-detailsLIst.push({ 'alertId': '07042020-1006', 'status': 'Resolved', 'level': '4', 'assignedTo': 'NIcholas Cook', 'ivrEnabled': 'No', 'bridgeActive': 'Yes', 'startTime': '2020-07-07', 'upgradeTime': '2020-07-10', 'endTime': '2020-07-15', 'triggerCriteria': '[LongesQueueTime]>=15', 'businessSegment': 'Modern Lift, Gaming & Customer Service', 'origanization': 'Windows', 'queueDetails': 'Surface consumer Tech Support', 'region': 'NA', 'modality': 'Phone Inbound', 'language': 'English', 'sites': [{ 'siteName': 'CNX kuala Lumpur', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }, { 'siteName': 'Avanade Taguig', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }], 'metric1': '65', 'metric2': '51', 'metric3': '44', 'metric4': '35', 'metric5': '26', 'metric6': '53', 'metric7': '23', 'metric8': '35%' })
-detailsLIst.push({ 'alertId': '07042020-1007', 'status': 'Resolved', 'level': '1', 'assignedTo': 'Admin', 'ivrEnabled': 'Yes', 'bridgeActive': 'No', 'startTime': '2020-07-07', 'upgradeTime': '2020-07-10', 'endTime': '2020-07-15', 'triggerCriteria': '[CallsINQueue]>=50', 'businessSegment': 'Modern Lift, Gaming & Customer Service', 'origanization': 'Xbox', 'queueDetails': 'UR Office', 'region': 'Japan', 'modality': 'Phone Inbound', 'language': 'Spanish', 'sites': [{ 'siteName': 'Avanade Taguig', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }, { 'siteName': 'NTC tokyo', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }], 'metric1': '95', 'metric2': '32', 'metric3': '45', 'metric4': '14', 'metric5': '95', 'metric6': '56', 'metric7': '11', 'metric8': '22%' })
+// const detailsLIst = []
+// detailsLIst.push({ 'alertId': '07042020-1002', 'status': 'New', 'level': '3', 'assignedTo': 'NIcholas Cook', 'ivrEnabled': 'No', 'bridgeActive': 'No', 'startTime': '2020-07-05', 'upgradeTime': '2020-07-08', 'endTime': '2020-07-10', 'triggerCriteria': '(Metric1 > 10 & Metric2 > 5) OR (Metric 8 < 50%)', 'businessSegment': 'Modern Lift, Gaming & Customer Service', 'origanization': 'O365/Office', 'queueDetails': 'UR Office', 'region': 'NA', 'modality': 'Phone Inbound', 'language': 'English', 'sites': [{ 'siteName': 'CNX Bangalore', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }], 'metric1': '20', 'metric2': '45', 'metric3': '30', 'metric4': '32', 'metric5': '16', 'metric6': '55', 'metric7': '42', 'metric8': '42%' })
+// detailsLIst.push({ 'alertId': '07042020-1003', 'status': 'New', 'level': '1', 'assignedTo': 'New', 'ivrEnabled': 'No', 'bridgeActive': 'Yes', 'startTime': '2020-07-06', 'upgradeTime': '2020-07-08', 'endTime': '2020-07-12', 'triggerCriteria': '[LongesQueueTime]>=15', 'businessSegment': 'Modern Lift, Gaming & Customer Service', 'origanization': 'O365/Office', 'queueDetails': 'TS Windows', 'region': 'Xbox', 'modality': 'Phone Inbound', 'language': 'English', 'sites': [{ 'siteName': 'NTC Sapporo', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }, { 'siteName': 'NTC tokyo', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }], 'metric1': '5', 'metric2': '11', 'metric3': '42', 'metric4': '35', 'metric5': '18', 'metric6': '86', 'metric7': '23', 'metric8': '35%' })
+// detailsLIst.push({ 'alertId': '07042020-1004', 'status': 'Active', 'level': '2', 'assignedTo': 'NIcholas Cook', 'ivrEnabled': 'Yes', 'bridgeActive': 'No', 'startTime': '2020-07-06', 'upgradeTime': '2020-07-09', 'endTime': '2020-07-13', 'triggerCriteria': '[LongesQueueTime]>=15 and [CallsInQueue]>=5', 'businessSegment': 'Modern Lift, Gaming & Customer Service', 'origanization': 'O365/Office', 'queueDetails': 'Xbox All', 'region': 'EMEA: Latarn', 'modality': 'Click 2 Call', 'language': 'Japan', 'sites': [{ 'siteName': 'NTC tokyo', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }], 'metric1': '23', 'metric2': '54', 'metric3': '12', 'metric4': '83', 'metric5': '20', 'metric6': '7', 'metric7': '35', 'metric8': '22%' })
+// detailsLIst.push({ 'alertId': '07042020-1005', 'status': 'Active', 'level': '1', 'assignedTo': 'NIcholas Cook', 'ivrEnabled': 'Yes', 'bridgeActive': 'Yes', 'startTime': '2020-07-06', 'upgradeTime': '2020-07-09', 'endTime': '2020-07-13', 'triggerCriteria': '[LongesQueueTime]>=6 and [CallsInQueue]>=15', 'businessSegment': 'Modern Lift, Gaming & Customer Service', 'origanization': 'O365/Office', 'queueDetails': 'UR Office', 'region': 'Global', 'modality': 'Phone Inbound', 'language': 'French', 'sites': [{ 'siteName': 'Relia Yokohama', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }], 'metric1': '5', 'metric2': '11', 'metric3': '42', 'metric4': '35', 'metric5': '18', 'metric6': '86', 'metric7': '23', 'metric8': '39%' })
+// detailsLIst.push({ 'alertId': '07042020-1006', 'status': 'Resolved', 'level': '4', 'assignedTo': 'NIcholas Cook', 'ivrEnabled': 'No', 'bridgeActive': 'Yes', 'startTime': '2020-07-07', 'upgradeTime': '2020-07-10', 'endTime': '2020-07-15', 'triggerCriteria': '[LongesQueueTime]>=15', 'businessSegment': 'Modern Lift, Gaming & Customer Service', 'origanization': 'Windows', 'queueDetails': 'Surface consumer Tech Support', 'region': 'NA', 'modality': 'Phone Inbound', 'language': 'English', 'sites': [{ 'siteName': 'CNX kuala Lumpur', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }, { 'siteName': 'Avanade Taguig', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }], 'metric1': '65', 'metric2': '51', 'metric3': '44', 'metric4': '35', 'metric5': '26', 'metric6': '53', 'metric7': '23', 'metric8': '35%' })
+// detailsLIst.push({ 'alertId': '07042020-1007', 'status': 'Resolved', 'level': '1', 'assignedTo': 'Admin', 'ivrEnabled': 'Yes', 'bridgeActive': 'No', 'startTime': '2020-07-07', 'upgradeTime': '2020-07-10', 'endTime': '2020-07-15', 'triggerCriteria': '[CallsINQueue]>=50', 'businessSegment': 'Modern Lift, Gaming & Customer Service', 'origanization': 'Xbox', 'queueDetails': 'UR Office', 'region': 'Japan', 'modality': 'Phone Inbound', 'language': 'Spanish', 'sites': [{ 'siteName': 'Avanade Taguig', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }, { 'siteName': 'NTC tokyo', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }], 'metric1': '95', 'metric2': '32', 'metric3': '45', 'metric4': '14', 'metric5': '95', 'metric6': '56', 'metric7': '11', 'metric8': '22%' })
 
-const initData = { 'alertId': '07042020-1002', 'level': '3', 'assignedTo': 'NIcholas Cook', 'ivrEnabled': 'No', 'bridgeActive': 'No', 'startTime': '2020-07-05', 'upgradeTime': '2020-07-08', 'endTime': '2020-07-10', 'triggerCriteria': '(Metric1 > 10 & Metric2 > 5) OR (Metric 8 < 50%)', 'businessSegment': 'Modern Lift, Gaming & Customer Service', 'origanization': 'O365/Office', 'queueDetails': 'UR Office', 'region': 'NA', 'modality': 'Phone Inbound', 'language': 'English', 'sites': [{ 'siteName': 'CNX Bangalore', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }] }
+// const initData = { 'alertId': '07042020-1002', 'level': '3', 'assignedTo': 'NIcholas Cook', 'ivrEnabled': 'No', 'bridgeActive': 'No', 'startTime': '2020-07-05', 'upgradeTime': '2020-07-08', 'endTime': '2020-07-10', 'triggerCriteria': '(Metric1 > 10 & Metric2 > 5) OR (Metric 8 < 50%)', 'businessSegment': 'Modern Lift, Gaming & Customer Service', 'origanization': 'O365/Office', 'queueDetails': 'UR Office', 'region': 'NA', 'modality': 'Phone Inbound', 'language': 'English', 'sites': [{ 'siteName': 'CNX Bangalore', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }] }
 
 export default {
   name: 'AlertDetail',
@@ -146,7 +146,7 @@ export default {
   data() {
     return {
       notClick: false,
-      dataValue: Object.assign({}, initData),
+      dataValue: {},
       siteName: 'Site 1'
     }
   },
@@ -204,17 +204,21 @@ export default {
       this.$i18n.mergeLocaleMessage('zh', local.zh)
     }
     const alertid = this.$route.params && this.$route.params.alertId
-    this.fetchData(alertid)
-    // fetchList(alertid).then(response=>{
-    //  console.log(response)
-    // })
+    // this.fetchData(alertid)
+    fetchAlert(alertid).then(response => {
+      console.log(response.alertData)
+      this.dataValue = response.alertData
+      if (this.dataValue.status === 'Resolved') {
+        this.notClick = true
+      }
+    })
   },
   methods: {
     toggleSideBar() {
       this.$store.dispatch('app/toggleAlertBar')
     },
     fetchData(id) {
-      this.dataValue = detailsLIst.filter(item => item.alertId === id)[0]
+      // this.dataValue = detailsLIst.filter(item => item.alertId === id)[0]
       // console.log(this.dataValue)
       // fetchAlert(id).then(response => {
       //   console.log(response)
@@ -223,7 +227,12 @@ export default {
       // })
     },
     handleAssginToMe() {
-      this.dataValue.assignedTo = this.currentUser
+      // this.dataValue.assignedTo = this.currentUser
+      const data = { 'id': this.dataValue.alertId, 'assigenedTo': this.currentUser }
+      alertAssgineTo(data).then(response => {
+        console.log(response)
+        this.dataValue.assignedTo = this.currentUser
+      })
       this.showNotification()
     },
     handleResolve() {
@@ -233,7 +242,12 @@ export default {
         changedStatus = 'Active'
         this.notClick = false
       }
-      this.dataValue.status = changedStatus
+      // this.dataValue.status = changedStatus
+      const data = { 'id': this.dataValue.alertId, 'status': changedStatus }
+      changeAlertStatus(data).then(response => {
+        console.log(response)
+        this.dataValue.status = changedStatus
+      })
     },
     showNotification() {
       this.$notify.error({
@@ -247,9 +261,6 @@ export default {
     },
     tableRowClassName({ row, rowIndex }) {
       return 'background-row'
-    },
-    showSiteDetail(index) {
-      alert(index)
     }
   }
 }
