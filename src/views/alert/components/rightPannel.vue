@@ -90,8 +90,8 @@ export default {
 }
 .btn-action{
   display: inline-block;
-  padding-left: 20%;
-  padding-right: 20%;
+  padding-left: 5%;
+  padding-right: 5%;
   line-height: 2rem;
 }
 .btn-icon{
