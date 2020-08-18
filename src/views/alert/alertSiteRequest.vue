@@ -1,24 +1,24 @@
 <template>
   <alertdetail-title>
-    <div slot="leftpannel_title">IVR Messaging | {{ alertID }}</div>
+    <div slot="leftpannel_title">SiteName: {{ siteName }} | Inquiry Request | {{ alertID }}</div>
     <div slot="right-pannel" />
     <div slot="left-pannel">
-      <el-form ref="ruleForm" :model="ruleForm" :rules="rules">
+      <el-form ref="entryForm" :model="entryForm" :rules="rules">
         <div class="div-content-container">
           <el-row class="div-content-title">
-            <el-form-item prop="mailTitle">
-              <el-input v-model="ruleForm.mailTitle" type="textarea" :autosize="{ minRows: 2}" placeholder="please input content" />
+            <el-form-item prop="title">
+              <el-input v-model="entryForm.title" type="textarea" :autosize="{ minRows: 4}" placeholder="please input custom info" name="inputlog" />
             </el-form-item>
           </el-row>
           <el-row class="div-content-content">
-            <el-form-item prop="mailContent">
-              <el-input v-model="ruleForm.mailContent" type="textarea" :autosize="{ minRows: 4}" placeholder="please input content" />
+            <el-form-item prop="contentText">
+              <el-input v-model="entryForm.contentText" type="textarea" :autosize="{ minRows: 6}" placeholder="please input custom info" name="inputlog" />
             </el-form-item>
           </el-row>
         </div>
         <div class="div-submit">
           <el-form-item>
-            <div class="btncenteralign"> <el-button type="primary" @click="submitForm('ruleForm')">submit</el-button></div>
+            <div class="btncenteralign"> <el-button type="primary" @click="submitForm('entryForm')">Send</el-button></div>
           </el-form-item>
         </div>
       </el-form>
@@ -28,26 +28,26 @@
 
 <script>
 import AlertdetailTitle from './components/alertdetailTitle'
-
-// eslint-disable-next-line no-unused-vars
-const alertID = ''
+// import { sendRequest } from '@/api/alerts'
 
 export default {
-  name: 'DetailIVR',
+  name: 'SiteRequest',
   components: {
     AlertdetailTitle
   },
+  alertID: '1111',
+  siteName: '222',
   data() {
     return {
-      ruleForm: {
-        mailTitle: 'Editable list Inquiry Form Recipients that prepopulates with the Sites distributions list.',
-        mailContent: 'The text body of the email to be sent that informs the Sites of the status change (opposite of the current state), the message content being turned on/off, and any other details deemed necessary.'
+      entryForm: {
+        title: 'Editable list Inquiry Form Recipients that prepopulates with the Sites distributions list.',
+        contentText: 'Inquiry Field 1: Editable Value Inquiry Field 2: Editable Value Inquiry Field 3: Editable Value'
       },
       rules: {
-        mailTitle: [
+        title: [
           { required: true, message: 'please input content', trigger: 'blur' }
         ],
-        mailContent: [
+        contentText: [
           { required: true, message: 'please input content', trigger: 'blur' }
         ]
       }
@@ -55,8 +55,10 @@ export default {
   },
   created() {
     const id = this.$route.params && this.$route.params.alertId
-    console.log(id)
+    const siteName = this.$route.params && this.$route.params.siteName
+    // this.getLogs(id)
     this.alertID = id
+    this.siteName = siteName
   },
   methods: {
     submitForm(formName) {
@@ -96,5 +98,8 @@ text-align: center;
 }
 .div-content-content{
   border: 1px 1px 0px 0px solid  #A5C2E6;
+}
+.textarea {
+  white-space: pre-line;
 }
 </style>

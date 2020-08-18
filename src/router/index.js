@@ -127,6 +127,15 @@ export const constantRoutes = [
           title: 'Site'
         },
         hidden: true
+      },
+      {
+        path: 'alert/detail/:alertId/:siteName/siterequest',
+        component: () => import('@/views/alert/alertSiteRequest'),
+        name: 'alertSiteRequest',
+        meta: {
+          title: 'SiteRequest'
+        },
+        hidden: true
       }
     ]
   },

@@ -88,27 +88,27 @@
           style="width: 100%;"
           :row-class-name="tableRowClassName"
         >
-          <el-table-column :label="$t('table.siteName')" prop="alertId" align="center" min-width="20%">
+          <el-table-column :label="$t('table.siteName')" align="center" min-width="20%">
             <template slot-scope="{row}">
               <span>{{ row.siteName }}</span>
             </template>
           </el-table-column>
-          <el-table-column :label="$t('table.open')" prop="alertId" align="center" min-width="21%">
+          <el-table-column :label="$t('table.open')" align="center" min-width="21%">
             <template slot-scope="{row}">
               <span>{{ row.open }}</span>
             </template>
           </el-table-column>
-          <el-table-column :label="$t('table.inquiryStatus')" prop="alertId" align="center" min-width="19%">
+          <el-table-column :label="$t('table.inquiryStatus')" align="center" min-width="19%">
             <template slot-scope="{row}">
               <span>{{ row.inquiryStatus }}</span>
             </template>
           </el-table-column>
-          <el-table-column :label="$t('table.lastContactTime')" prop="alertId" align="center" min-width="19%">
+          <el-table-column :label="$t('table.lastContactTime')" align="center" min-width="19%">
             <template slot-scope="{row}">
               <span>{{ row.lastcontact }}</span>
             </template>
           </el-table-column>
-          <el-table-column :label="$t('table.rootCauses')" prop="alertId" align="center" min-width="21%">
+          <el-table-column :label="$t('table.rootCauses')" align="center" min-width="21%">
             <template slot-scope="{row}">
               <span>{{ row.rootCauses }}</span>
             </template>
@@ -125,6 +125,7 @@ import AlertHamburger from '@/components/Hamburger/alertHamburger'
 import RightPannel from './components/rightPannel'
 import local from './local'
 const viewName = 'i18nView'
+import { fetchList } from '@/api/alerts'
 
 const detailsLIst = []
 detailsLIst.push({ 'alertId': '07042020-1002', 'status': 'New', 'level': '3', 'assignedTo': 'NIcholas Cook', 'ivrEnabled': 'No', 'bridgeActive': 'No', 'startTime': '2020-07-05', 'upgradeTime': '2020-07-08', 'endTime': '2020-07-10', 'triggerCriteria': '(Metric1 > 10 & Metric2 > 5) OR (Metric 8 < 50%)', 'businessSegment': 'Modern Lift, Gaming & Customer Service', 'origanization': 'O365/Office', 'queueDetails': 'UR Office', 'region': 'NA', 'modality': 'Phone Inbound', 'language': 'English', 'sites': [{ 'siteName': 'CNX Bangalore', 'open': 'Yes', 'lastcontact': 'N/A', 'inquiryStatus': 'Not Sent', 'rootCauses': 'V/M/S' }], 'metric1': '20', 'metric2': '45', 'metric3': '30', 'metric4': '32', 'metric5': '16', 'metric6': '55', 'metric7': '42', 'metric8': '42%' })
@@ -204,6 +205,9 @@ export default {
     }
     const alertid = this.$route.params && this.$route.params.alertId
     this.fetchData(alertid)
+    // fetchList(alertid).then(response=>{
+    //  console.log(response)
+    // })
   },
   methods: {
     toggleSideBar() {

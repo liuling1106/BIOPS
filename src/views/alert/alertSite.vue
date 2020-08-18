@@ -6,7 +6,9 @@
       <div class="container-action">
         <div class="container-box">
           <div class="btn-icon"><svg-icon icon-class="link" /></div>
-          <div class="btn-action" @click="eventinquiryRequest">{{ $t('i18nView.inquiryRequest') }}</div>
+          <router-link :to="{path: '/alert/detail/'+dataValue.alertId+'/'+ siteName + '/siterequest'}">
+            <div class="btn-action" @click="eventinquiryRequest">{{ $t('i18nView.inquiryRequest') }}</div>
+          </router-link>
         </div>
       </div>
     </div>

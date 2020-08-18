@@ -21,3 +21,17 @@ export function fetchAlertLog(id) {
     params: { id }
   })
 }
+export function saveLog(data) {
+  return request({
+    url: '/vue-element-admin/alerts/saveLog',
+    method: 'post',
+    data: data
+  })
+}
+export function sendRequest(data) {
+  return request({
+    url: '/vue-element-admin/alerts/sendRequest',
+    method: 'post',
+    data: data
+  })
+}

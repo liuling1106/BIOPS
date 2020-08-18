@@ -3,17 +3,17 @@
     <div slot="leftpannel_title">Custom Log Entry | {{ alertID }}</div>
     <div slot="right-pannel" />
     <div slot="left-pannel">
-      <el-form ref="mailForm" :model="mailData">
+      <el-form ref="ruleForm" :model="ruleForm" :rules="rules">
         <div class="div-content-container">
           <el-row class="div-content-content">
-            <el-form-item>
-              <el-input v-model="mailData.mailContent" type="textarea" :autosize="{ minRows: 4}" placeholder="请输入内容" />
+            <el-form-item prop="logsText">
+              <el-input v-model="ruleForm.logsText" type="textarea" :autosize="{ minRows: 4}" placeholder="please input custom logs" name="inputlog" required />
             </el-form-item>
           </el-row>
         </div>
         <div class="div-submit">
           <el-form-item>
-            <div class="btncenteralign"> <el-button type="primary" @click="submitForm('mailForm')">submit</el-button></div>
+            <div class="btncenteralign"> <el-button type="primary" @click="submitForm('ruleForm')">submit</el-button></div>
           </el-form-item>
         </div>
       </el-form>
@@ -23,7 +23,7 @@
 
 <script>
 import AlertdetailTitle from './components/alertdetailTitle'
-import { fetchAlertLog } from '@/api/alerts'
+import { fetchAlertLog, saveLog } from '@/api/alerts'
 
 // eslint-disable-next-line no-unused-vars
 const alertID = ''
@@ -35,22 +35,33 @@ export default {
   },
   data() {
     return {
-      mailData: {
-        mailTitle: 'Editable list Inquiry Form Recipients that prepopulates with the Sites distributions list.',
-        mailContent: 'The text body of the email to be sent that informs the Sites of the status change (opposite of the current state), the message content being turned on/off, and any other details deemed necessary.'
+      ruleForm: {
+        logsText: ''
+      },
+      rules: {
+        logsText: [
+          { required: true, message: 'please input content', trigger: 'blur' }
+        ]
       }
     }
   },
   created() {
     const id = this.$route.params && this.$route.params.alertId
-    this.getLogs(id)
+    // this.getLogs(id)
     this.alertID = id
   },
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          // alert('submit!')
+          // let formData =  JSON.stringify(this.ruleForm);
+          const formData = { 'logsText': this.ruleForm.logsText, 'currentUser': 'Admin', alertId: this.alertID }
+          console.log(formData)
+          saveLog(formData).then(response => {
+            console.log(response)
+            this.$router.push('/alert/detail/' + this.alertID + '/Log')
+          })
+          alert('submit!')
         } else {
           console.log('error submit!!')
           return false
@@ -59,7 +70,13 @@ export default {
     },
     getLogs(id) {
       fetchAlertLog(id).then(response => {
-        console.log(response)
+        const entrylogs = response.listLogs[0].Logs
+        const templogs = Array(entrylogs)
+        for (let j = 0; j < templogs.length; j++) {
+          this.logsText += templogs[j] + '/n'
+        }
+        // this.logsText =  this.logsText.trim('/n')
+        console.log(this.logsText)
       }
       )
     }
@@ -87,4 +104,6 @@ text-align: center;
 .div-content-content{
   border: 1px 1px 0px 0px solid  #A5C2E6;
 }
+.textarea {
+  white-space: pre-line;}
 </style>

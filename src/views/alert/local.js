@@ -34,7 +34,7 @@ export default {
       metric7: 'Metric7:',
       metric8: 'Metric8:',
       newAlert: '新的告警',
-      assgintoNewalert: '有人发送给你一个新的告警',
+      assgintoNewalert: '你有一个新的告警',
       seeMoreDetail: '查看详情',
       customlogEntry: '自定义用户日志',
       inquiryRequest: '发送请求',
@@ -53,7 +53,8 @@ export default {
       Saturday: 'Saturday',
       Sunday: 'Sunday',
       howrofoperation: 'Hour of Operation (PST):',
-      status: 'Status'
+      status: 'Status',
+      submitSuccess: 'Submit Success'
     }
   },
   en: {
@@ -90,7 +91,7 @@ export default {
       metric7: 'Metric7:',
       metric8: 'Metric8:',
       newAlert: 'Have a new alert',
-      assgintoNewalert: 'Some one assgin to you a new alert',
+      assgintoNewalert: 'Have a new alert',
       seeMoreDetail: 'See more details',
       customlogEntry: 'Custom Log Entry',
       inquiryRequest: 'Inquiry Request',
@@ -109,7 +110,8 @@ export default {
       Saturday: 'Saturday:',
       Sunday: 'Sunday:',
       howrofoperation: 'Hour of Operation (PST)',
-      status: 'Status'
+      status: 'Status',
+      submitSuccess: 'Submit Success'
     }
   }
 }
