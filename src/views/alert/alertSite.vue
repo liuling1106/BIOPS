@@ -30,39 +30,43 @@
       <div class="site-otherattr">
         <div class="site-request">
           <div class="site-request-title">{{ $t('i18nView.inquiryRequest') }}</div>
-          <el-row class="detail-metric-row">
-            <el-col :xs="24" :sm="24" :md="24" :lg="24"><div class=""><span class="for-label">{{ $t('i18nView.status') }}</span> <span>{{ dataValue.siteRequest.status }}</span></div></el-col>
-          </el-row>
-          <el-row class="detail-metric-row">
-            <el-col :xs="24" :sm="24" :md="24" :lg="24"><div class=""><span class="for-label">{{ $t('i18nView.lastContactTime') }}</span> <span>{{ dataValue.siteRequest.lastContactTime }}</span></div></el-col>
-          </el-row>
-          <el-row class="detail-metric-row">
-            <el-col :xs="24" :sm="24" :md="24" :lg="24"><div class=""><span class="for-label">{{ $t('i18nView.timeElapsed') }}</span> <span>{{ dataValue.siteRequest.timeElapsed }}</span></div></el-col>
-          </el-row>
+          <div class="site-request-content">
+            <el-row class="detail-metric-row">
+              <el-col :xs="24" :sm="24" :md="24" :lg="24"><div class=""><span class="for-label">{{ $t('i18nView.status') }}</span> <span>{{ dataValue.siteRequest.status }}</span></div></el-col>
+            </el-row>
+            <el-row class="detail-metric-row">
+              <el-col :xs="24" :sm="24" :md="24" :lg="24"><div class=""><span class="for-label">{{ $t('i18nView.lastContactTime') }}</span> <span>{{ dataValue.siteRequest.lastContactTime }}</span></div></el-col>
+            </el-row>
+            <el-row class="detail-metric-row">
+              <el-col :xs="24" :sm="24" :md="24" :lg="24"><div class=""><span class="for-label">{{ $t('i18nView.timeElapsed') }}</span> <span>{{ dataValue.siteRequest.timeElapsed }}</span></div></el-col>
+            </el-row>
+          </div>
         </div>
         <div class="site-request">
           <div class="site-request-title">{{ $t('i18nView.howrofoperation') }}</div>
-          <el-row class="detail-metric-row">
-            <el-col :xs="24" :sm="24" :md="24" :lg="24"><div class=""><span class="for-label">{{ $t('i18nView.Monday') }}</span> <span>{{ dataValue.siteHour.Monday }}</span></div></el-col>
-          </el-row>
-          <el-row class="detail-metric-row">
-            <el-col :xs="24" :sm="24" :md="24" :lg="24"><div class=""><span class="for-label">{{ $t('i18nView.Tuesday') }}</span> <span>{{ dataValue.siteHour.Tuesday }}</span></div></el-col>
-          </el-row>
-          <el-row class="detail-metric-row">
-            <el-col :xs="24" :sm="24" :md="24" :lg="24"><div class=""><span class="for-label">{{ $t('i18nView.Wednesday') }}</span> <span>{{ dataValue.siteHour.Wednesday }}</span></div></el-col>
-          </el-row>
-          <el-row class="detail-metric-row">
-            <el-col :xs="24" :sm="24" :md="24" :lg="24"><div class=""><span class="for-label">{{ $t('i18nView.Thursday') }}</span> <span>{{ dataValue.siteHour.Thursday }}</span></div></el-col>
-          </el-row>
-          <el-row class="detail-metric-row">
-            <el-col :xs="24" :sm="24" :md="24" :lg="24"><div class=""><span class="for-label">{{ $t('i18nView.Friday') }}</span> <span>{{ dataValue.siteHour.Friday }}</span></div></el-col>
-          </el-row>
-          <el-row class="detail-metric-row">
-            <el-col :xs="24" :sm="24" :md="24" :lg="24"><div class=""><span class="for-label">{{ $t('i18nView.Saturday') }}</span> <span>{{ dataValue.siteHour.Saturday }}</span></div></el-col>
-          </el-row>
-          <el-row class="detail-metric-row">
-            <el-col :xs="24" :sm="24" :md="24" :lg="24"><div class=""><span class="for-label">{{ $t('i18nView.Sunday') }}</span> <span>{{ dataValue.siteHour.Sunday }}</span></div></el-col>
-          </el-row>
+          <div class="site-request-content">
+            <el-row class="detail-metric-row">
+              <el-col :xs="24" :sm="24" :md="24" :lg="24"><div class=""><span class="for-label">{{ $t('i18nView.Monday') }}</span> <span>{{ dataValue.siteHour.Monday }}</span></div></el-col>
+            </el-row>
+            <el-row class="detail-metric-row">
+              <el-col :xs="24" :sm="24" :md="24" :lg="24"><div class=""><span class="for-label">{{ $t('i18nView.Tuesday') }}</span> <span>{{ dataValue.siteHour.Tuesday }}</span></div></el-col>
+            </el-row>
+            <el-row class="detail-metric-row">
+              <el-col :xs="24" :sm="24" :md="24" :lg="24"><div class=""><span class="for-label">{{ $t('i18nView.Wednesday') }}</span> <span>{{ dataValue.siteHour.Wednesday }}</span></div></el-col>
+            </el-row>
+            <el-row class="detail-metric-row">
+              <el-col :xs="24" :sm="24" :md="24" :lg="24"><div class=""><span class="for-label">{{ $t('i18nView.Thursday') }}</span> <span>{{ dataValue.siteHour.Thursday }}</span></div></el-col>
+            </el-row>
+            <el-row class="detail-metric-row">
+              <el-col :xs="24" :sm="24" :md="24" :lg="24"><div class=""><span class="for-label">{{ $t('i18nView.Friday') }}</span> <span>{{ dataValue.siteHour.Friday }}</span></div></el-col>
+            </el-row>
+            <el-row class="detail-metric-row">
+              <el-col :xs="24" :sm="24" :md="24" :lg="24"><div class=""><span class="for-label">{{ $t('i18nView.Saturday') }}</span> <span>{{ dataValue.siteHour.Saturday }}</span></div></el-col>
+            </el-row>
+            <el-row class="detail-metric-row">
+              <el-col :xs="24" :sm="24" :md="24" :lg="24"><div class=""><span class="for-label">{{ $t('i18nView.Sunday') }}</span> <span>{{ dataValue.siteHour.Sunday }}</span></div></el-col>
+            </el-row>
+          </div>
         </div>
       </div>
     </div>
@@ -107,11 +111,11 @@ export default {
     fetchData(id) {
       console.log('start fetchadata')
       console.log(this.dataValue)
-      detailsLIst.forEach(element => {
-        console.log(element.alertId)
-      })
-    //   this.dataValue = detailsLIst.filter(item => item.alertId === id)[0]
-    //   console.log(this.dataValue)
+      // detailsLIst.forEach(element => {
+      //   console.log(element.alertId)
+      // })
+      this.dataValue = detailsLIst.filter(item => item.alertId === id)[0]
+      console.log(this.dataValue)
     },
     eventinquiryRequest() {
 
@@ -123,6 +127,9 @@ export default {
 <style lang="scss" scoped>
 .leftbar-content{
     padding: 2px;
+}
+.right-sidebar{
+  height: 100vh*0.82 -37px
 }
 
 .container-box{
@@ -146,15 +153,18 @@ export default {
 }
 .site-attr{
     border: 1px solid #A5C2E6;
-    height:  calc(100vh - 424px);
+    height: 100vh*0.3;
+    // height:  calc(100vh - 424px);
 }
 .site-otherattr{
-    height: calc(100vh - 364px);
+    // height: calc(100vh - 364px);
+    height: 100vh*0.52;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 .site-request{
-    display: inline-block;
-    width: 50%;
-    height: calc(100vh - 364px);
+    flex:1;
     border: 1px solid #A5C2E6;
 }
  .for-label{
@@ -166,7 +176,9 @@ export default {
     }
 .site-request .site-request-title{
     font-weight: bold;
-    display: inline-block;
     text-align: center;
+}
+.site-request .site-request-content{
+text-align: center;
 }
 </style>

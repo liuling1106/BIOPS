@@ -351,7 +351,5 @@ export default {
     padding: 2px;
     border: 1px solid #A5C2E6;
   }
-  .el-table .background-row {
-   background:#c5e0b4;
- }
+
 </style>

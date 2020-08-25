@@ -37,8 +37,17 @@ module.exports = [
     url: '/vue-element-admin/alerts/list',
     type: 'get',
     response: config => {
-      const { page = 1, limit = 20, sort } = config.query
-      let mockList = List
+      console.log(config.body)
+      const { level, assignedTo, status, ivrEnabled, bridgeActive, page = 1, limit = 20, sort } = config.query
+      let mockList = List.filter(item => {
+        if (level && item.level !== level) return false
+        if (assignedTo && item.assignedTo !== assignedTo) return false
+        if (status && item.status !== status) return false
+        if (ivrEnabled && item.ivrEnabled !== ivrEnabled) return false
+        if (bridgeActive && item.bridgeActive !== bridgeActive) return false
+
+        return true
+      })
       if (sort === '-id') {
         mockList = mockList.reverse()
       }

@@ -1,5 +1,25 @@
 <template>
   <div class="app-container">
+    <div class="filter-container">
+      <el-select v-model="listQuery.level" :placeholder="$t('table.level')" clearable style="width: 100px" class="filter-item">
+        <el-option v-for="item in levelOptions" :key="item" :label="item" :value="item" />
+      </el-select>
+      <el-select v-model="listQuery.status" :placeholder="$t('table.status')" clearable style="width：80px" class="filter-item">
+        <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
+      </el-select>
+      <el-select v-model="listQuery.assignedTo" :placeholder="$t('table.assignedTo')" clearable style="width：100px" class="filter-item">
+        <el-option v-for="item in assignedToOptions" :key="item" :label="item" :value="item" />
+      </el-select>
+      <el-select v-model="listQuery.ivrEnabled" :placeholder="$t('table.ivrEnabled')" clearable style="width：60px" class="filter-item">
+        <el-option v-for="item in truefalseOptions" :key="item" :label="item" :value="item" />
+      </el-select>
+      <el-select v-model="listQuery.bridgeActive" :placeholder="$t('table.bridgeActive')" clearable style="width：60px" class="filter-item">
+        <el-option v-for="item in truefalseOptions" :key="item" :label="item" :value="item" />
+      </el-select>
+      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+        {{ $t('table.search') }}
+      </el-button>
+    </div>
     <el-table
       v-loading="listLoading"
       :header-cell-style="{background:'#A5C2E6',color:'#606266'}"
@@ -7,45 +27,46 @@
       fit
       stripe
       style="width: 100%;"
+      @sort-change="sortChange"
     >
-      <el-table-column :label="$t('table.alertId')" prop="alertId" align="center" min-width="15%">
+      <el-table-column :label="$t('table.alertId')" prop="alertId" sortable align="center" min-width="15%">
         <template slot-scope="{row}">
           <router-link :to="'/alert/detail/'+row.alertId" class="link-type">
             <span>{{ row.alertId }}</span>
           </router-link>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.level')" min-width="10%" align="center">
+      <el-table-column :label="$t('table.level')" prop="level" sortable min-width="9%" align="center">
         <template slot-scope="{row}">
           <span>{{ row.level }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.duration')" min-width="10%" align="center">
+      <el-table-column :label="$t('table.duration')" prop="duration" sortable min-width="10%" align="center">
         <template slot-scope="{row}">
           <span>{{ row.duration }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.status')" min-width="10%">
+      <el-table-column :label="$t('table.status')" prop="status" sortable min-width="9%">
         <template slot-scope="{row}">
           <span>{{ row.status }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.assignedTo')" align="center" min-width="13%">
+      <el-table-column :label="$t('table.assignedTo')" prop="assignedTo" sortable align="center" min-width="13%">
         <template slot-scope="{row}">
           <span>{{ row.assignedTo }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.inquiryRequests')" class-name="status-col" min-width="12%">
+      <el-table-column :label="$t('table.inquiryRequests')" prop="inquiryRequests" class-name="status-col" sortable min-width="15%">
         <template slot-scope="{row}">
           <span>{{ row.inquiryRequests }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.ivrEnabled')" align="center" min-width="15%" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('table.ivrEnabled')" align="center" prop="ivrEnabled" sortable min-width="14%" class-name="small-padding fixed-width">
         <template slot-scope="{row}">
           <span>{{ row.ivrEnabled }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.bridgeActive')" align="center" min-width="15%" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('table.bridgeActive')" align="center" prop="bridgeActive" sortable min-width="15%" class-name="small-padding fixed-width">
         <template slot-scope="{row}">
           <span>{{ row.bridgeActive }}</span>
         </template>
@@ -59,7 +80,6 @@
 <script>
 import { fetchList } from '@/api/alerts'
 import waves from '@/directive/waves' // waves directive
-import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 
 export default {
@@ -73,8 +93,18 @@ export default {
       listLoading: true,
       listQuery: {
         page: 1,
-        limit: 20
+        limit: 20,
+        sort: '+id',
+        level: '',
+        assignedTo: '',
+        status: '',
+        ivrEnabled: '',
+        bridgeActive: ''
       },
+      levelOptions: [1, 2, 3, 4],
+      truefalseOptions: ['Yes', 'No'],
+      assignedToOptions: ['New', 'Nicholas Cook'],
+      statusOptions: ['New', 'Active', 'Resolved'],
       temp: {
         startTime: undefined,
         assginedTo: 1,
@@ -103,31 +133,28 @@ export default {
         }, 1.5 * 1000)
       })
     },
-    tableRowClassName({ row, rowIndex }) {
-      if (rowIndex === 0) {
-        return 'table_header'
+    handleFilter() {
+      this.listQuery.page = 1
+      this.getList()
+    },
+    sortChange(data) {
+      console.log(data)
+      // const { prop, order } = data
+      // if (prop === 'alertId') {
+      //    this.sortByID(order)
+      // }
+    },
+    sortByID(order) {
+      if (order === 'ascending') {
+        this.listQuery.sort = '+id'
+      } else {
+        this.listQuery.sort = '-id'
       }
-      return ''
+      this.handleFilter()
     },
-    handleCreate() {
-      this.resetTemp()
-      this.dialogStatus = 'create'
-      this.dialogFormVisible = true
-      this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
-      })
-    },
-    handleUpdate(row) {
-
-    },
-    formatJson(filterVal) {
-      return this.list.map(v => filterVal.map(j => {
-        if (j === 'timestamp') {
-          return parseTime(v[j])
-        } else {
-          return v[j]
-        }
-      }))
+    getSortClass(key) {
+      const sort = this.listQuery.sort
+      return sort === `+${key}` ? 'ascending' : 'descending'
     }
   }
 }
@@ -135,5 +162,6 @@ export default {
 <style>
 .app-container{
   padding: 2px;
+  padding-top: 20px;
 }
 </style>

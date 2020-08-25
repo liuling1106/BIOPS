@@ -68,7 +68,7 @@ export default {
 .app-container-1{
     padding: 2px;
     border: 1px solid #A5C2E6;
-    min-height: calc(100vh - 84px);
+    // min-height: calc(100vh - 84px);
     }
   .hideAlertbar .right-sidebar{
       width: 20%;
