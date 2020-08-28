@@ -7,7 +7,7 @@
         <div class="container-box">
           <div class="btn-icon"><svg-icon icon-class="link" /></div>
           <router-link :to="{path: '/alert/detail/'+dataValue.alertId+'/'+ siteName + '/siterequest'}">
-            <div class="btn-action" @click="eventinquiryRequest">{{ $t('i18nView.inquiryRequest') }}</div>
+            <div class="btn-action" @click="eventinquiryRequest">{{ $t('i18nView.context') }}</div>
           </router-link>
         </div>
       </div>
@@ -29,10 +29,10 @@
       </div>
       <div class="site-otherattr">
         <div class="site-request">
-          <div class="site-request-title">{{ $t('i18nView.inquiryRequest') }}</div>
+          <div class="site-request-title">{{ $t('i18nView.context') }}</div>
           <div class="site-request-content">
             <el-row class="detail-metric-row">
-              <el-col :xs="24" :sm="24" :md="24" :lg="24"><div class=""><span class="for-label">{{ $t('i18nView.status') }}</span> <span>{{ dataValue.siteRequest.status }}</span></div></el-col>
+              <el-col :xs="24" :sm="24" :md="24" :lg="24"><div class=""><span class="for-label">{{ $t('i18nView.status') }}: </span> <span>{{ dataValue.siteRequest.status }}</span></div></el-col>
             </el-row>
             <el-row class="detail-metric-row">
               <el-col :xs="24" :sm="24" :md="24" :lg="24"><div class=""><span class="for-label">{{ $t('i18nView.lastContactTime') }}</span> <span>{{ dataValue.siteRequest.lastContactTime }}</span></div></el-col>

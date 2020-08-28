@@ -29,10 +29,12 @@
       </right-pannel>
     </div>
     <div class="alert-content">
-      <div class="detail-header">{{ titleLevel }} | {{ dataValue.alertId }}
+      <div class="detail-header">{{ titleLevel }} | {{ dataValue.alertId }} |
+        <span class="" :style="{ 'color': activeColor(dataValue.status)}">{{ dataValue.status }}</span>
         <div v-if="alertbar.opened" class="alertToggle">
           <alert-hamburger :is-active="alertbar.opened" @toggleClick="toggleSideBar" />
         </div>
+        <div class="header-right" :style="{ 'color': activeColor(dataValue.status)}">{{ dataValue.status }}</div>
       </div>
       <div class="detail-attribute">
         <el-row class="detail-metric-row">
@@ -245,6 +247,15 @@ export default {
     },
     tableRowClassName({ row, rowIndex }) {
       return 'background-row'
+    },
+    activeColor(status) {
+      if (status === 'New') {
+        return 'red'
+      } else if (status === 'Active') {
+        return '#F0AD4E'
+      } else if (status === 'Resolved') {
+        return 'green'
+      }
     }
   }
 }
@@ -269,7 +280,6 @@ export default {
   .hideAlertbar .alert-content{ width: 80%; overflow-y:auto;}
   .openAlertbar .alert-sidebar{ display: none !important}
   .openAlertbar .alert-content{width: 100% !important;}
-
     .alertToggle{
       font-size: 20px;
       height: 35px;
@@ -292,7 +302,7 @@ export default {
     padding-left: 20px;
   }
     .alertToggle{
-      padding-right: -20px;
+      padding-right: -30px;
       display: inline-block;
       float: right;
     }
@@ -312,14 +322,6 @@ export default {
         pointer-events: none;
         background-color: #dbdbdb;
     }
-
-    .detail-header{
-    background-color: #A5C2E6;
-    height: 35px;
-    border: 1px solid #4472c4;
-    line-height: 35px;
-    padding-left: 20px;
-  }
   .detail-attribute{
     padding: 20px;
     border: 1px solid #A5C2E6;
@@ -351,5 +353,9 @@ export default {
     padding: 2px;
     border: 1px solid #A5C2E6;
   }
-
+.header-right{
+    display: inline-block;
+    float: right;
+    padding-right: 5px;
+  }
 </style>

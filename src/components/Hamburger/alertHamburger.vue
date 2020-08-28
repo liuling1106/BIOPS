@@ -4,7 +4,7 @@
       :class="{'is-active':isActive}"
       class="hamburger"
     >
-      <text x="0" y="15" fill="grey" style="font-size=20px">&gt;</text>
+      <text x="0" y="17" fill="grey" style="font-size=20px">&gt;</text>
     </svg>
   </div>
 </template>

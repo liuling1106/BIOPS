@@ -1,19 +1,19 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-select v-model="listQuery.level" :placeholder="$t('table.level')" clearable style="width: 100px" class="filter-item">
+      <el-select v-model="listQuery.level" :placeholder="$t('table.level')" clearable style="width: 100px" class="filter-item" multiple>
         <el-option v-for="item in levelOptions" :key="item" :label="item" :value="item" />
       </el-select>
-      <el-select v-model="listQuery.status" :placeholder="$t('table.status')" clearable style="width：80px" class="filter-item">
+      <el-select v-model="listQuery.status" :placeholder="$t('table.status')" clearable style="width：80px" class="filter-item" multiple>
         <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
       </el-select>
-      <el-select v-model="listQuery.assignedTo" :placeholder="$t('table.assignedTo')" clearable style="width：100px" class="filter-item">
+      <el-select v-model="listQuery.assignedTo" :placeholder="$t('table.assignedTo')" clearable style="width：100px" class="filter-item" multiple>
         <el-option v-for="item in assignedToOptions" :key="item" :label="item" :value="item" />
       </el-select>
-      <el-select v-model="listQuery.ivrEnabled" :placeholder="$t('table.ivrEnabled')" clearable style="width：60px" class="filter-item">
+      <el-select v-model="listQuery.ivrEnabled" :placeholder="$t('table.ivrEnabled')" clearable style="width：60px" class="filter-item" multiple>
         <el-option v-for="item in truefalseOptions" :key="item" :label="item" :value="item" />
       </el-select>
-      <el-select v-model="listQuery.bridgeActive" :placeholder="$t('table.bridgeActive')" clearable style="width：60px" class="filter-item">
+      <el-select v-model="listQuery.bridgeActive" :placeholder="$t('table.bridgeActive')" clearable style="width：60px" class="filter-item" multiple>
         <el-option v-for="item in truefalseOptions" :key="item" :label="item" :value="item" />
       </el-select>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
@@ -48,7 +48,7 @@
       </el-table-column>
       <el-table-column :label="$t('table.status')" prop="status" sortable min-width="9%">
         <template slot-scope="{row}">
-          <span>{{ row.status }}</span>
+          <span :style="{ 'color': activeColor(row)}">{{ row.status }}</span>
         </template>
       </el-table-column>
       <el-table-column :label="$t('table.assignedTo')" prop="assignedTo" sortable align="center" min-width="13%">
@@ -95,15 +95,15 @@ export default {
         page: 1,
         limit: 20,
         sort: '+id',
-        level: '',
-        assignedTo: '',
-        status: '',
-        ivrEnabled: '',
-        bridgeActive: ''
+        level: [],
+        assignedTo: [],
+        status: [],
+        ivrEnabled: [],
+        bridgeActive: []
       },
       levelOptions: [1, 2, 3, 4],
       truefalseOptions: ['Yes', 'No'],
-      assignedToOptions: ['New', 'Nicholas Cook'],
+      assignedToOptions: ['New', 'NIcholas Cook', 'Admin'],
       statusOptions: ['New', 'Active', 'Resolved'],
       temp: {
         startTime: undefined,
@@ -123,7 +123,6 @@ export default {
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
-        console.log(response.data.items)
         this.list = response.data.items
         this.total = response.data.total
 
@@ -155,6 +154,15 @@ export default {
     getSortClass(key) {
       const sort = this.listQuery.sort
       return sort === `+${key}` ? 'ascending' : 'descending'
+    },
+    activeColor(row) {
+      if (row.status === 'New') {
+        return 'red'
+      } else if (row.status === 'Active') {
+        return '#F0AD4E'
+      } else if (row.status === 'Resolved') {
+        return 'green'
+      }
     }
   }
 }

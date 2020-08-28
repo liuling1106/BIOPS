@@ -54,7 +54,8 @@ export default {
       Sunday: 'Sunday',
       howrofoperation: 'Hour of Operation (PST):',
       status: 'Status',
-      submitSuccess: 'Submit Success'
+      submitSuccess: 'Submit Success',
+      context: '上下文'
     }
   },
   en: {
@@ -111,7 +112,8 @@ export default {
       Sunday: 'Sunday:',
       howrofoperation: 'Hour of Operation (PST)',
       status: 'Status',
-      submitSuccess: 'Submit Success'
+      submitSuccess: 'Submit Success',
+      context: 'Context'
     }
   }
 }

@@ -21,6 +21,8 @@
         <div v-if="alertbar.opened" class="alertToggle">
           <alert-hamburger :is-active="alertbar.opened" @toggleClick="toggleSideBar" />
         </div>
+        <!-- right title -->
+        <!-- <div class="header-right">sssss</div> -->
       </div>
       <div class="leftbar-content">
         <slot name="left-pannel">left pannel</slot>
@@ -113,7 +115,9 @@ export default {
     .alertToggle{
       display: inline-block;
       float: right;
-      padding-right: -20px;
+      padding-right: -30px;
+      height: 35px;
+      width: 35px;
     }
 .right-sidebar-container{
    background-color: #A5C2E6;
@@ -158,4 +162,9 @@ export default {
 .leftbar-content{
     padding: 2px;
 }
+.header-right{
+    display: inline-block;
+    float: right;
+    padding-right: 5px;
+  }
 </style>
