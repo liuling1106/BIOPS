@@ -32,10 +32,10 @@
           <div class="site-request-title">{{ $t('i18nView.context') }}</div>
           <div class="site-request-content">
             <el-row class="detail-metric-row">
-              <el-col :xs="24" :sm="24" :md="24" :lg="24"><div class=""><span class="for-label">{{ $t('i18nView.status') }}: </span> <span>{{ dataValue.siteRequest.status }}</span></div></el-col>
+              <el-col :xs="24" :sm="24" :md="24" :lg="24"><div class=""><span class="for-label">{{ $t('i18nView.status') }}: </span> <span>{{ dataValue.siteRequest.inquiryStatus }}</span></div></el-col>
             </el-row>
             <el-row class="detail-metric-row">
-              <el-col :xs="24" :sm="24" :md="24" :lg="24"><div class=""><span class="for-label">{{ $t('i18nView.lastContactTime') }}</span> <span>{{ dataValue.siteRequest.lastContactTime }}</span></div></el-col>
+              <el-col :xs="24" :sm="24" :md="24" :lg="24"><div class=""><span class="for-label">{{ $t('i18nView.lastContactTime') }}</span> <span>{{ dataValue.siteRequest.lastcontact }}</span></div></el-col>
             </el-row>
             <el-row class="detail-metric-row">
               <el-col :xs="24" :sm="24" :md="24" :lg="24"><div class=""><span class="for-label">{{ $t('i18nView.timeElapsed') }}</span> <span>{{ dataValue.siteRequest.timeElapsed }}</span></div></el-col>
@@ -77,9 +77,10 @@
 import AlertdetailTitle from './components/alertdetailTitle'
 import local from '../alert/local'
 const viewName = 'i18nView'
+import { fetchAlertSite } from '@/api/alerts'
 
 const detailsLIst = []
-detailsLIst.push({ 'alertId': '07042020-1003', 'siteattr': { 'sitePhone': '(023) 266-1488', 'distributionList': 'XXXXXXXX@vendor.com, YYYYYYYY@vendor.org, ZZZZZZZZZ@vendor.com', 'primarySDM': 'Name | Phone | Email', 'SecondarySDM': 'Name | Phone | Email' }, 'siteRequest': { 'status': 'Not Sent', 'lastContactTime': 'N/A', 'timeElapsed': 'N/A' }, 'siteHour': { 'Monday': 'XX:XX AM to XX:XX PM', 'Tuesday': 'XX:XX AM to XX:XX PM', 'Wednesday': 'XX:XX AM to XX:XX PM', 'Thursday': 'XX:XX AM to XX:XX PM', 'Friday': 'XX:XX AM to XX:XX PM', 'Saturday': 'XX:XX AM to XX:XX PM', 'Sunday': 'XX:XX AM to XX:XX PM' }})
+detailsLIst.push({ 'alertId': '07042020-1008', 'siteattr': { 'sitePhone': '(023) 266-1488', 'distributionList': 'XXXXXXXX@vendor.com, YYYYYYYY@vendor.org, ZZZZZZZZZ@vendor.com', 'primarySDM': 'Name | Phone | Email', 'SecondarySDM': 'Name | Phone | Email' }, 'siteRequest': { 'status': 'Not Sent', 'lastContactTime': 'N/A', 'timeElapsed': 'N/A' }, 'siteHour': { 'Monday': 'XX:XX AM to XX:XX PM', 'Tuesday': 'XX:XX AM to XX:XX PM', 'Wednesday': 'XX:XX AM to XX:XX PM', 'Thursday': 'XX:XX AM to XX:XX PM', 'Friday': 'XX:XX AM to XX:XX PM', 'Saturday': 'XX:XX AM to XX:XX PM', 'Sunday': 'XX:XX AM to XX:XX PM' }})
 detailsLIst.push({ 'alertId': '07042020-1004', 'siteattr': { 'sitePhone': '(023) 266-1488', 'distributionList': 'XXXXXXXX@vendor.com, YYYYYYYY@vendor.org, ZZZZZZZZZ@vendor.com', 'primarySDM': 'Name | Phone | Email', 'SecondarySDM': 'Name | Phone | Email' }, 'siteRequest': { 'status': 'Not Sent', 'lastContactTime': 'N/A', 'timeElapsed': 'N/A' }, 'siteHour': { 'Monday': 'XX:XX AM to XX:XX PM', 'Tuesday': 'XX:XX AM to XX:XX PM', 'Wednesday': 'XX:XX AM to XX:XX PM', 'Thursday': 'XX:XX AM to XX:XX PM', 'Friday': 'XX:XX AM to XX:XX PM', 'Saturday': 'XX:XX AM to XX:XX PM', 'Sunday': 'XX:XX AM to XX:XX PM' }})
 detailsLIst.push({ 'alertId': '07042020-1005', 'siteattr': { 'sitePhone': '(023) 266-1488', 'distributionList': 'XXXXXXXX@vendor.com, YYYYYYYY@vendor.org, ZZZZZZZZZ@vendor.com', 'primarySDM': 'Name | Phone | Email', 'SecondarySDM': 'Name | Phone | Email' }, 'siteRequest': { 'status': 'Not Sent', 'lastContactTime': 'N/A', 'timeElapsed': 'N/A' }, 'siteHour': { 'Monday': 'XX:XX AM to XX:XX PM', 'Tuesday': 'XX:XX AM to XX:XX PM', 'Wednesday': 'XX:XX AM to XX:XX PM', 'Thursday': 'XX:XX AM to XX:XX PM', 'Friday': 'XX:XX AM to XX:XX PM', 'Saturday': 'XX:XX AM to XX:XX PM', 'Sunday': 'XX:XX AM to XX:XX PM' }})
 detailsLIst.push({ 'alertId': '07042020-1006', 'siteattr': { 'sitePhone': '(023) 266-1488', 'distributionList': 'XXXXXXXX@vendor.com, YYYYYYYY@vendor.org, ZZZZZZZZZ@vendor.com', 'primarySDM': 'Name | Phone | Email', 'SecondarySDM': 'Name | Phone | Email' }, 'siteRequest': { 'status': 'Not Sent', 'lastContactTime': 'N/A', 'timeElapsed': 'N/A' }, 'siteHour': { 'Monday': 'XX:XX AM to XX:XX PM', 'Tuesday': 'XX:XX AM to XX:XX PM', 'Wednesday': 'XX:XX AM to XX:XX PM', 'Thursday': 'XX:XX AM to XX:XX PM', 'Friday': 'XX:XX AM to XX:XX PM', 'Saturday': 'XX:XX AM to XX:XX PM', 'Sunday': 'XX:XX AM to XX:XX PM' }})
@@ -105,17 +106,26 @@ export default {
     console.log(id)
     this.siteName = this.$route.params && this.$route.params.siteName
     console.log(this.siteName)
-    // this.fetchData(id)
+    fetchAlertSite(id, this.siteName).then(response => {
+      console.log(response)
+      // console.log(response.data.Logs)
+      // console.log(response.code)
+      // console.log(response.loglists)
+      // console.log(response.loglists.Logs)
+      // const displayLogs = response.data.Logs.reverse()
+      // this.dataValue.Logs = displayLogs
+      this.dataValue = response.data
+    })
   },
   methods: {
-    fetchData(id) {
+    fetchAlertSite(id) {
       console.log('start fetchadata')
       console.log(this.dataValue)
       // detailsLIst.forEach(element => {
       //   console.log(element.alertId)
       // })
-      this.dataValue = detailsLIst.filter(item => item.alertId === id)[0]
-      console.log(this.dataValue)
+      // this.dataValue = detailsLIst.filter(item => item.alertId === id)[0]
+      // console.log(this.dataValue)
     },
     eventinquiryRequest() {
 

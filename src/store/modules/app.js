@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie'
 import { getLanguage } from '@/lang/index'
+import { getAlertCounts } from '@/views/alert/index'
 
 const state = {
   sidebar: {
@@ -12,7 +13,8 @@ const state = {
   },
   device: 'desktop',
   language: getLanguage(),
-  size: Cookies.get('size') || 'medium'
+  size: Cookies.get('size') || 'medium',
+  alertsCount: getAlertCounts()
 }
 
 const mutations = {
@@ -49,6 +51,10 @@ const mutations = {
   SET_SIZE: (state, size) => {
     state.size = size
     Cookies.set('size', size)
+  },
+  SET_ALERTCOUNT: (state, count) => {
+    state.alertsCount = count
+    Cookies.set('alert_count', count)
   }
 }
 
@@ -70,6 +76,9 @@ const actions = {
   },
   setSize({ commit }, size) {
     commit('SET_SIZE', size)
+  },
+  setAlertCount({ commit }, count) {
+    commit('SET_ALERTCOUNT', count)
   }
 }
 

@@ -34,7 +34,7 @@
         <div v-if="alertbar.opened" class="alertToggle">
           <alert-hamburger :is-active="alertbar.opened" @toggleClick="toggleSideBar" />
         </div>
-        <div class="header-right" :style="{ 'color': activeColor(dataValue.status)}">{{ dataValue.status }}</div>
+        <!-- <div class="header-right" :style="{ 'color': activeColor(dataValue.status)}">{{ dataValue.status }}</div> -->
       </div>
       <div class="detail-attribute">
         <el-row class="detail-metric-row">
@@ -195,11 +195,11 @@ export default {
       this.$i18n.mergeLocaleMessage('en', local.en)
       this.$i18n.mergeLocaleMessage('zh', local.zh)
     }
-    const alertid = this.$route.params && this.$route.params.alertId
+    const alertID = this.$route.params && this.$route.params.alertId
     // this.fetchData(alertid)
-    fetchAlert(alertid).then(response => {
-      console.log(response.alertData)
-      this.dataValue = response.alertData
+    fetchAlert(alertID).then(response => {
+      console.log(response)
+      this.dataValue = response.data
       if (this.dataValue.status === 'Resolved') {
         this.notClick = true
       }
@@ -214,12 +214,19 @@ export default {
     },
     handleAssginToMe() {
       // this.dataValue.assignedTo = this.currentUser
-      const data = { 'id': this.dataValue.alertId, 'assigenedTo': this.currentUser }
-      alertAssgineTo(data).then(response => {
+      // var qs = require('querystring')
+
+      // const obj = JSON.stringify({ 'alertid': this.dataValue.alertId, 'attr': 'ss', 'currentuser': this.currentUser })
+      const obj = { 'name': 'xiaoj', 'age': 1 }
+      // const param = new URLSearchParams()
+      // param.append('name', 'xiaoj')
+      // param.append('age', 3)
+      // this.axios({}).then(function(){}).catch(function(){}
+      alertAssgineTo(obj).then(response => {
         console.log(response)
-        this.dataValue.assignedTo = this.currentUser
+        // this.dataValue.assignedTo = this.currentUser
       })
-      this.showNotification()
+      // this.showNotification()
     },
     handleResolve() {
       let changedStatus = 'Resolved'
@@ -229,10 +236,10 @@ export default {
         this.notClick = false
       }
       // this.dataValue.status = changedStatus
-      const data = { 'id': this.dataValue.alertId, 'status': changedStatus }
+      const data = JSON.stringify({ 'alertid': this.dataValue.alertId, 'attr': changedStatus, 'currentuser': this.currentUser })
       changeAlertStatus(data).then(response => {
         console.log(response)
-        this.dataValue.status = changedStatus
+        // this.dataValue.status = changedStatus
       })
     },
     showNotification() {

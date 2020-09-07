@@ -1,17 +1,21 @@
 <template>
   <div>
-    <span> {{ $t('navbar.alerts') }}</span><el-badge class="mark" :value="AlertCount" />
+    <span> {{ $t('navbar.alerts') }}</span><el-badge class="mark" :value="alertCount" />
   </div>
 </template>
-
 <script>
-
+// import { getAlertCounts } from '@/views/alert/index'
+import { mapState } from 'vuex'
 export default {
   name: 'Alert',
-  data() {
-    return {
-      AlertCount: 6
-    }
+  // data: {
+  //   alertCount: mapState.alertsCount
+  // }
+
+  computed: {
+    ...mapState({
+      alertCount: state => state.app.alertsCount
+    })
   }
 }
 

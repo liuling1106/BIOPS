@@ -81,6 +81,7 @@
 import { fetchList } from '@/api/alerts'
 import waves from '@/directive/waves' // waves directive
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
+import { mapState } from 'vuex'
 
 export default {
   name: 'AlertList',
@@ -104,32 +105,34 @@ export default {
       levelOptions: [1, 2, 3, 4],
       truefalseOptions: ['Yes', 'No'],
       assignedToOptions: ['New', 'NIcholas Cook', 'Admin'],
-      statusOptions: ['New', 'Active', 'Resolved'],
-      temp: {
-        startTime: undefined,
-        assginedTo: 1,
-        upgradeTime: '',
-        ivrStatus: new Date(),
-        endTime: '',
-        bridgeStatus: '',
-        status: 'published'
-      }
+      statusOptions: ['New', 'Active', 'Resolved']
+      // alertCount: mapState.alertsCount
     }
   },
+  computed: {
+    ...mapState({
+      alertCount: state => state.app.alertsCount
+    })
+  },
   created() {
-    this.getList()
+    this.GetAlertList()
   },
   methods: {
+    GetAlertList() {
+      window.setInterval(this.getList(), 6000 * 5)
+    },
     getList() {
       this.listLoading = true
-      fetchList(this.listQuery).then(response => {
-        this.list = response.data.items
-        this.total = response.data.total
-
+      fetchList().then(response => {
+        // console.log(response)
+        // console.log(response.data.length)
+        // console.log(response.data)
+        this.list = response.data
+        this.total = response.data.length
         // Just to simulate the time of the request
         setTimeout(() => {
           this.listLoading = false
-        }, 1.5 * 1000)
+        }, 1.5 * 100)
       })
     },
     handleFilter() {

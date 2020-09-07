@@ -42,15 +42,16 @@ export default {
       this.$i18n.mergeLocaleMessage('en', local.en)
       this.$i18n.mergeLocaleMessage('zh', local.zh)
     }
-    const id = this.$route.params && this.$route.params.alertId
-    console.log(id)
-    this.dataValue.alertId = id
-    fetchAlertLog(id).then(response => {
+    const alertid = this.$route.params && this.$route.params.alertId
+    console.log(alertid)
+    this.dataValue.alertId = alertid
+    fetchAlertLog(alertid).then(response => {
       console.log(response)
-      console.log(response.code)
-      console.log(response.loglists)
-      console.log(response.loglists.Logs)
-      const displayLogs = response.loglists.Logs.reverse()
+      console.log(response.data.Logs)
+      // console.log(response.code)
+      // console.log(response.loglists)
+      // console.log(response.loglists.Logs)
+      const displayLogs = response.data.Logs.reverse()
       this.dataValue.Logs = displayLogs
     })
   }
