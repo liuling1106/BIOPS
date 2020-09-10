@@ -59,9 +59,11 @@ export default {
           console.log(formData)
           saveLog(formData).then(response => {
             console.log(response)
+            this.$alert(this.$t('alerts.inqueryRequestsuccess'), this.$t('alerts.message'), {
+              confirmButtonText: this.$t('alerts.confirm')
+            })
             this.$router.push('/alert/detail/' + this.alertID + '/Log')
           })
-          alert('submit!')
         } else {
           console.log('error submit!!')
           return false

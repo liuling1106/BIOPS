@@ -22,24 +22,26 @@ export function fetchAlert(alertid) {
     params: { alertid }
   })
 }
-export function alertAssgineTo(obj) {
+export function alertAssgineTo(data) {
+  console.log(data)
   return request({
-    url: '/assginTo',
-    method: 'post',
-    headers: { 'Content-Type': 'application/json; charset=utf-8', dataType: 'json' },
-    data: obj
-    // data: qs.stringify(obj)
-    // data: obj
+    url: '/assginToGet',
+    method: 'get',
+    // headers: { 'Content-Type': 'application/json;charset=utf-8' },
+    // headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    // data: { data }
+    params: data
+    // data: data
   })
 }
 export function changeAlertStatus(data) {
   return request({
-    url: '/changeStatus',
-    method: 'post',
+    url: '/changeStatusGet',
+    method: 'get',
     // headers: { 'Content-Type': 'application/json; charset=utf-8', dataType: 'json' },
-    headers: { 'contentType': 'application/json; charset=utf-8', dataType: 'json' }
+    // headers: { 'contentType': 'application/json; charset=utf-8', dataType: 'json' }
     // data: qs.stringify(data)
-    // data: data
+    params: data
   })
 }
 export function fetchAlertLog(alertid) {
@@ -61,6 +63,13 @@ export function saveLog(data) {
     url: '/GetAlertSite',
     method: 'post',
     data: data
+  })
+}
+export function changeAlertSiteStatus(data) {
+  return request({
+    url: '/changeAlertSiteStatus',
+    method: 'get',
+    params: data
   })
 }
 export function sendRequest(data) {

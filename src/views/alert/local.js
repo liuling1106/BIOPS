@@ -55,7 +55,8 @@ export default {
       howrofoperation: 'Hour of Operation (PST):',
       status: 'Status',
       submitSuccess: 'Submit Success',
-      context: '上下文'
+      context: '上下文',
+      cannotSendTo: 'this alert can not assgin to yourself'
     }
   },
   en: {
@@ -113,7 +114,8 @@ export default {
       howrofoperation: 'Hour of Operation (PST)',
       status: 'Status',
       submitSuccess: 'Submit Success',
-      context: 'Context'
+      context: 'Context',
+      cannotSendTo: 'this alert can not assgin to yourself'
     }
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <alertdetail-title>
-    <div slot="leftpannel_title">SiteName: {{ siteName }} | Inquiry Request | {{ alertID }}</div>
+    <div slot="leftpannel_title">SiteName: {{ dataValue.siteName }} | Inquiry Request | {{ dataValue.alertID }}</div>
     <div slot="right-pannel" />
     <div slot="left-pannel">
       <el-form ref="entryForm" :model="entryForm" :rules="rules">
@@ -28,15 +28,13 @@
 
 <script>
 import AlertdetailTitle from './components/alertdetailTitle'
-// import { sendRequest } from '@/api/alerts'
-
+import { changeAlertSiteStatus } from '@/api/alerts'
+import { mapState } from 'vuex'
 export default {
   name: 'SiteRequest',
   components: {
     AlertdetailTitle
   },
-  alertID: '1111',
-  siteName: '222',
   data() {
     return {
       entryForm: {
@@ -50,24 +48,37 @@ export default {
         contentText: [
           { required: true, message: 'please input content', trigger: 'blur' }
         ]
-      }
+      },
+      dataValue: { alertID: '1111', siteName: '222' }
     }
+  },
+  computed: {
+    ...mapState({
+      alertbar: state => state.app.alertbar,
+      currentUser: state => state.user.name
+    })
   },
   created() {
     const id = this.$route.params && this.$route.params.alertId
     const siteName = this.$route.params && this.$route.params.siteName
     // this.getLogs(id)
-    this.alertID = id
-    this.siteName = siteName
+    this.dataValue.alertID = id
+    this.dataValue.siteName = siteName
+    console.log(this.dataValue)
   },
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$router.push('/alert/detail/' + this.alertID)
-          this.$message({
-            message: this.$t('i18nView.submitSuccess'),
-            type: 'success'
+          // console.log({ alertId: this.dataValue.alertID, siteName: this.dataValue.siteName, inquiryStatus: 'Send', currentUser: this.currentUser })
+          // return
+          changeAlertSiteStatus({ alertId: this.dataValue.alertID, siteName: this.dataValue.siteName, inquiryStatus: 'Send', currentUser: this.currentUser }).then(response => {
+            console.log(response)
+            // this.$router.push('/alert/detail/' + this.dataValue.alertID)
+            this.$alert(this.$t('alerts.inqueryRequestsuccess'), this.$t('alerts.message'), {
+              confirmButtonText: this.$t('alerts.confirm')
+            })
+            this.$router.push('/alert/detail/' + this.dataValue.alertID)
           })
         } else {
           console.log('error submit!!')

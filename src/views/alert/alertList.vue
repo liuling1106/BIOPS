@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-select v-model="listQuery.level" :placeholder="$t('table.level')" clearable style="width: 100px" class="filter-item" multiple>
+      <el-select v-model="listQuery.level" :placeholder="$t('table.priority')" clearable style="width: 100px" class="filter-item" multiple>
         <el-option v-for="item in levelOptions" :key="item" :label="item" :value="item" />
       </el-select>
       <el-select v-model="listQuery.status" :placeholder="$t('table.status')" clearable style="width：80px" class="filter-item" multiple>
@@ -16,7 +16,7 @@
       <el-select v-model="listQuery.bridgeActive" :placeholder="$t('table.bridgeActive')" clearable style="width：60px" class="filter-item" multiple>
         <el-option v-for="item in truefalseOptions" :key="item" :label="item" :value="item" />
       </el-select>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter(listQuery)">
         {{ $t('table.search') }}
       </el-button>
     </div>
@@ -36,7 +36,7 @@
           </router-link>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.level')" prop="level" sortable min-width="9%" align="center">
+      <el-table-column :label="$t('table.priority')" prop="level" sortable min-width="9%" align="center">
         <template slot-scope="{row}">
           <span>{{ row.level }}</span>
         </template>
@@ -79,16 +79,17 @@
 
 <script>
 import { fetchList } from '@/api/alerts'
-import waves from '@/directive/waves' // waves directive
-import Pagination from '@/components/Pagination' // secondary package based on el-pagination
-import { mapState } from 'vuex'
+import waves from '@/directive/waves'
+import Pagination from '@/components/Pagination'
 
 export default {
   name: 'AlertList',
   components: { Pagination },
   directives: { waves },
+  props: ['alertId'],
   data() {
     return {
+      pageList: null,
       list: null,
       total: 0,
       listLoading: true,
@@ -105,39 +106,66 @@ export default {
       levelOptions: [1, 2, 3, 4],
       truefalseOptions: ['Yes', 'No'],
       assignedToOptions: ['New', 'NIcholas Cook', 'Admin'],
-      statusOptions: ['New', 'Active', 'Resolved']
-      // alertCount: mapState.alertsCount
+      statusOptions: ['New', 'Active', 'Resolved', 'Upgraded'],
+      alertsCount: 0
     }
   },
-  computed: {
-    ...mapState({
-      alertCount: state => state.app.alertsCount
-    })
-  },
   created() {
-    this.GetAlertList()
+    this.getList(this.listQuery)
+    this.GetAlertList(this.listQuery)
   },
   methods: {
-    GetAlertList() {
-      window.setInterval(this.getList(), 6000 * 5)
+    GetAlertList(query) {
+      window.setInterval(() => {
+        setTimeout(() => { this.getList(query) }, 0)
+      }, 60000 * 5)
     },
-    getList() {
+    getList(query) {
       this.listLoading = true
       fetchList().then(response => {
-        // console.log(response)
-        // console.log(response.data.length)
-        // console.log(response.data)
-        this.list = response.data
+        this.listLoading = false
+        this.pageList = response.data
         this.total = response.data.length
-        // Just to simulate the time of the request
-        setTimeout(() => {
-          this.listLoading = false
-        }, 1.5 * 100)
+        this.list = this.handleFilter(query)
+        // the first load, the alertsCount is 0, for cookies have no alertsCount record
+        if (this.alertsCount === 0) {
+          // update alertCount in right corner pannel
+          this.$root.Bus.$emit('send', response.data.length)
+          this.alertsCount = response.data.length
+        } else if (response.data.length > this.alertsCount && this.alertsCount !== 0) {
+          this.$root.Bus.$emit('send', response.data.length)
+          this.alertsCount = response.data.length
+          // send notificatioin
+          this.$emit('pop', '07042020-1002')
+        }
       })
     },
-    handleFilter() {
-      this.listQuery.page = 1
-      this.getList()
+    handleFilter(query) {
+      const { level, assignedTo, status, ivrEnabled, bridgeActive, page = 1, limit = 20, sort } = query
+      let mockList = this.pageList.filter(item => {
+        if (level.length > 0 && level.indexOf(item.level) < 0) {
+          return false
+        }
+        if (assignedTo.length > 0 && assignedTo.indexOf(item.assignedTo) < 0) {
+          return false
+        }
+        if (status.length > 0 && status.indexOf(item.status) < 0) {
+          return false
+        }
+        if (ivrEnabled.length > 0 && ivrEnabled.indexOf(item.ivrEnabled) < 0) {
+          return false
+        }
+        if (bridgeActive.length > 0 && bridgeActive.indexOf(item.bridgeActive) < 0) {
+          return false
+        }
+
+        return true
+      })
+      if (sort === '-id') {
+        mockList = mockList.reverse()
+      }
+      this.list = mockList.filter((item, index) => index < limit * page && index >= limit * (page - 1))
+      return this.list
     },
     sortChange(data) {
       console.log(data)
@@ -152,14 +180,14 @@ export default {
       } else {
         this.listQuery.sort = '-id'
       }
-      this.handleFilter()
+      this.handleFilter(order)
     },
     getSortClass(key) {
       const sort = this.listQuery.sort
       return sort === `+${key}` ? 'ascending' : 'descending'
     },
     activeColor(row) {
-      if (row.status === 'New') {
+      if (row.status === 'New' || row.status === 'Upgraded') {
         return 'red'
       } else if (row.status === 'Active') {
         return '#F0AD4E'

@@ -54,7 +54,7 @@ const mutations = {
   },
   SET_ALERTCOUNT: (state, count) => {
     state.alertsCount = count
-    Cookies.set('alert_count', count)
+    Cookies.set('alertsCount', count)
   }
 }
 

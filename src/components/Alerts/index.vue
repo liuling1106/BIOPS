@@ -1,20 +1,23 @@
 <template>
   <div>
-    <span> {{ $t('navbar.alerts') }}</span><el-badge class="mark" :value="alertCount" />
+    <span> {{ $t('navbar.alerts') }}</span><el-badge class="mark" :value="alertsCount" />
   </div>
 </template>
 <script>
-// import { getAlertCounts } from '@/views/alert/index'
-import { mapState } from 'vuex'
 export default {
   name: 'Alert',
-  // data: {
-  //   alertCount: mapState.alertsCount
-  // }
-
   computed: {
-    ...mapState({
-      alertCount: state => state.app.alertsCount
+    alertsCount: {
+      get() {
+        return this.$store.state.app.alertsCount
+      },
+      set(val) {}
+    }
+  },
+  created() {
+    this.$root.Bus.$on('send', (val) => {
+      this.alertsCount = val
+      this.$store.dispatch('app/setAlertCount', val)
     })
   }
 }

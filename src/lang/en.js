@@ -144,6 +144,7 @@ export default {
     confirm: 'Confirm',
     alertId: 'AlertId',
     level: 'Level',
+    priority: 'Priority',
     duration: 'Duration',
     assignedTo: 'AssignedTo',
     inquiryRequests: 'InquiryRequests',
@@ -192,5 +193,10 @@ export default {
     tagsView: 'Open Tags-View',
     fixedHeader: 'Fixed Header',
     sidebarLogo: 'Sidebar Logo'
+  },
+  alerts: {
+    confirm: 'Confirm',
+    message: 'Message',
+    inqueryRequestsuccess: 'This action is success'
   }
 }

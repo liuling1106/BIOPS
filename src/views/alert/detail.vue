@@ -198,16 +198,6 @@ export default {
       } catch (error) {
         return false
       }
-    },
-    showNotification() {
-      this.$notify.error({
-        title: this.$t('i18nView.newAlert'),
-        // message: this.$t('i18nView.assgintoNewalert'),
-        dangerouslyUseHTMLString: true,
-        // message: '<strong>这是 <i>HTML</i> 片段</strong><a href="#/alert/detail/' + this.dataValue.alertId + '">cha kan xiangqing</a>',
-        message: '<span>' + this.$t('i18nView.assgintoNewalert') + '</span><a href="#/alert/detail/07042020-1003" class="link-type">' + this.$t('i18nView.seeMoreDetail') + '</a>',
-        duration: 3600
-      })
     }
   }
 }

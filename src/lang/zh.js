@@ -144,6 +144,7 @@ export default {
     confirm: '确 定',
     alertId: '警告编号',
     level: '级别',
+    priority: '级别',
     duration: '间隔时间',
     assignedTo: '发送给',
     inquiryRequests: '请求',
@@ -192,5 +193,10 @@ export default {
     tagsView: '开启 Tags-View',
     fixedHeader: '固定 Header',
     sidebarLogo: '侧边栏 Logo'
+  },
+  alerts: {
+    confirm: '确定',
+    message: '信息',
+    inqueryRequestsuccess: '操作成功'
   }
 }

@@ -3,16 +3,16 @@
     <div class="alert-sidebar">
       <right-pannel>
         <div class="container-action">
-          <div class="container-box" :class="{'not-click':notClick}">
+          <div class="container-box" :class="{'not-click':notClick || !ableUpdate}">
             <div class="btn-icon"><svg-icon icon-class="link" /></div>
             <div class="btn-action" @click="handleAssginToMe">{{ $t('i18nView.assginToMe') }}</div>
           </div>
-          <div class="container-box" :class="{'not-click':notClick}">
+          <div class="container-box" :class="{'not-click':notClick || !ableUpdate}">
             <div class="btn-icon"><i class="el-icon-platform-eleme" /></div>
             <!-- <div class="btn-action"><router-link :to=" + alertId+ '/IVRMessaging'">{{ $t('i18nView.ivrMessage') }}|{{ alertId }}</router-link></div> -->
             <router-link :to="{path: '/alert/detail/'+dataValue.alertId+'/IVRMessaging'}"><div class="btn-action">{{ $t('i18nView.ivrMessage') }}</div></router-link>
           </div>
-          <div class="container-box">
+          <div class="container-box" :class="{'not-click':!ableUpdate}">
             <div class="btn-icon"><i class="el-icon-video-camera-solid" /></div>
             <div class="btn-action" @click="handleResolve()">{{ resolveText }}</div>
           </div>
@@ -138,6 +138,7 @@ export default {
   data() {
     return {
       notClick: false,
+      ableUpdate: true,
       dataValue: {},
       siteName: 'Site 1'
     }
@@ -203,6 +204,9 @@ export default {
       if (this.dataValue.status === 'Resolved') {
         this.notClick = true
       }
+      if (this.dataValue.status === 'Upgraded') {
+        this.ableUpdate = false
+      }
     })
   },
   methods: {
@@ -213,20 +217,33 @@ export default {
       // this.dataValue = detailsLIst.filter(item => item.alertId === id)[0]
     },
     handleAssginToMe() {
-      // this.dataValue.assignedTo = this.currentUser
-      // var qs = require('querystring')
+      if (this.currentUser === this.dataValue.assignedTo) {
+        this.$alert(this.$t('i18nView.cannotSendTo'), this.$t('alerts.message'), {
+          confirmButtonText: this.$t('alerts.confirm')
+        })
 
+        return false
+      }
+      // var qs = require('querystring')
+      // const obj = qs.stringify({ name: 'xiaoj', age: 1 })
+      // const obj = 'name=xiaoj&age=5'
+
+      // const obj = { name: 'xiaoj', age: 1 }
+      // const obj = new URLSearchParams()
+      // obj.append('name', 'xiaoj')
+      // obj.append('age', 2)
       // const obj = JSON.stringify({ 'alertid': this.dataValue.alertId, 'attr': 'ss', 'currentuser': this.currentUser })
-      const obj = { 'name': 'xiaoj', 'age': 1 }
+      // var formdata = new FormData()
+      // formdata.append('name', 'xiaj')
+      // formdata.append('age', 3)
+      // const obj = { name: 'xiaoj', age: 1 }
       // const param = new URLSearchParams()
       // param.append('name', 'xiaoj')
       // param.append('age', 3)
-      // this.axios({}).then(function(){}).catch(function(){}
-      alertAssgineTo(obj).then(response => {
-        console.log(response)
-        // this.dataValue.assignedTo = this.currentUser
+      alertAssgineTo({ alertid: this.dataValue.alertId, assginTo: this.dataValue.assignedTo, currentUser: this.currentUser }).then(response => {
+        // console.log(response)
+        this.dataValue.assignedTo = this.currentUser
       })
-      // this.showNotification()
     },
     handleResolve() {
       let changedStatus = 'Resolved'
@@ -236,27 +253,17 @@ export default {
         this.notClick = false
       }
       // this.dataValue.status = changedStatus
-      const data = JSON.stringify({ 'alertid': this.dataValue.alertId, 'attr': changedStatus, 'currentuser': this.currentUser })
-      changeAlertStatus(data).then(response => {
+      // const data = { 'alertid': this.dataValue.alertId, 'status': changedStatus, 'currentuser': this.currentUser }
+      changeAlertStatus({ 'alertid': this.dataValue.alertId, 'status': changedStatus, 'currentuser': this.currentUser }).then(response => {
         console.log(response)
-        // this.dataValue.status = changedStatus
-      })
-    },
-    showNotification() {
-      this.$notify.error({
-        title: this.$t('i18nView.newAlert'),
-        // message: this.$t('i18nView.assgintoNewalert'),
-        dangerouslyUseHTMLString: true,
-        // message: '<strong>这是 <i>HTML</i> 片段</strong><a href="#/alert/detail/' + this.dataValue.alertId + '">cha kan xiangqing</a>',
-        message: '<span>' + this.$t('i18nView.assgintoNewalert') + '</span><a href="#/alert/detail/07042020-1003" class="link-type">' + this.$t('i18nView.seeMoreDetail') + '</a>',
-        duration: 3600
+        this.dataValue.status = changedStatus
       })
     },
     tableRowClassName({ row, rowIndex }) {
       return 'background-row'
     },
     activeColor(status) {
-      if (status === 'New') {
+      if (status === 'New' || status === 'Upgraded') {
         return 'red'
       } else if (status === 'Active') {
         return '#F0AD4E'
